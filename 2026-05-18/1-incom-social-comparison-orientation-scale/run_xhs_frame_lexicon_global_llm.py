@@ -727,6 +727,57 @@ def select_lexicon_by_nli(
     return lex[mask].copy(), selected_names
 
 
+def has_selected_directional_nli_frame(nli_selected: str) -> bool:
+    parts = [part.strip().upper() for part in str(nli_selected or "").split("|") if part.strip()]
+    return any(part.startswith("UP:") or part.startswith("DOWN:") for part in parts)
+
+
+def apply_consistency_overrides(
+    label: str,
+    code: int,
+    parsed: Dict[str, Any],
+    nli_obj: Dict[str, Any],
+    nli_selected: str,
+    nli_args: Optional[argparse.Namespace],
+) -> Tuple[str, int, Dict[str, Any]]:
+    if not isinstance(parsed, dict):
+        return label, code, parsed
+
+    original_label = label
+    original_code = code
+    final_relation = str(parsed.get("comparison_relation", "")).strip().lower()
+    nli_relation = str(nli_obj.get("comparison_relation", "")).strip().lower() if isinstance(nli_obj, dict) else ""
+    has_directional_frame = has_selected_directional_nli_frame(nli_selected)
+
+    override_reason = ""
+    if getattr(nli_args, "enforce_relation_consistency", False):
+        if final_relation == "absent" and code in [0, 2]:
+            override_reason = "final_comparison_relation_absent_forces_neutral"
+
+    if (
+        not override_reason
+        and nli_args is not None
+        and getattr(nli_args, "use_nli_retrieval", False)
+        and getattr(nli_args, "nli_absent_force_neutral", False)
+        and nli_relation == "absent"
+        and not has_directional_frame
+        and code in [0, 2]
+    ):
+        override_reason = "nli_relation_absent_no_directional_frame_forces_neutral"
+
+    if override_reason:
+        label = "NEUTRAL"
+        code = 1
+        parsed["_label_before_override"] = original_label
+        parsed["_code_before_override"] = original_code
+        parsed["_override_reason"] = override_reason
+        parsed["label"] = "NEUTRAL"
+        if not str(parsed.get("dominant_frame", "")).strip():
+            parsed["dominant_frame"] = "NONE"
+
+    return label, code, parsed
+
+
 def build_frames_from_selected_lex(
     args: argparse.Namespace,
     selected_lex: pd.DataFrame,
@@ -781,6 +832,7 @@ def classify_one(
     nli_raw = ""
     nli_error = ""
     nli_selected = ""
+    nli_obj: Dict[str, Any] = {}
 
     if nli_args is not None and getattr(nli_args, "use_nli_retrieval", False) and lex is not None:
         candidate_frames_text, candidate_keys = build_nli_candidate_frames(
@@ -857,6 +909,14 @@ def classify_one(
                     parsed["_nli_selected_frames"] = nli_selected
                     parsed["_nli_raw"] = nli_raw
                     parsed["_nli_error"] = nli_error
+                    label, code, parsed = apply_consistency_overrides(
+                        label=label,
+                        code=code,
+                        parsed=parsed,
+                        nli_obj=nli_obj,
+                        nli_selected=nli_selected,
+                        nli_args=nli_args,
+                    )
                 return label, code, raw, parse_error, parsed
 
             last_error = parse_error
@@ -914,6 +974,8 @@ def classify_row_worker(
         "dominant_frame": parsed.get("dominant_frame", "") if isinstance(parsed, dict) else "",
         "comparison_relation": parsed.get("comparison_relation", "") if isinstance(parsed, dict) else "",
         "neutralizer_present": parsed.get("neutralizer_present", "") if isinstance(parsed, dict) else "",
+        "label_before_override": parsed.get("_label_before_override", "") if isinstance(parsed, dict) else "",
+        "override_reason": parsed.get("_override_reason", "") if isinstance(parsed, dict) else "",
         "nli_selected_frames": parsed.get("_nli_selected_frames", "") if isinstance(parsed, dict) else "",
         "nli_raw": parsed.get("_nli_raw", "") if isinstance(parsed, dict) else "",
         "nli_error": parsed.get("_nli_error", "") if isinstance(parsed, dict) else "",
@@ -1145,6 +1207,8 @@ def run_one_experiment(
                     "dominant_frame": parsed.get("dominant_frame", "") if isinstance(parsed, dict) else "",
                     "comparison_relation": parsed.get("comparison_relation", "") if isinstance(parsed, dict) else "",
                     "neutralizer_present": parsed.get("neutralizer_present", "") if isinstance(parsed, dict) else "",
+                    "label_before_override": parsed.get("_label_before_override", "") if isinstance(parsed, dict) else "",
+                    "override_reason": parsed.get("_override_reason", "") if isinstance(parsed, dict) else "",
                     "nli_selected_frames": parsed.get("_nli_selected_frames", "") if isinstance(parsed, dict) else "",
                     "nli_raw": parsed.get("_nli_raw", "") if isinstance(parsed, dict) else "",
                     "nli_error": parsed.get("_nli_error", "") if isinstance(parsed, dict) else "",
@@ -1208,6 +1272,8 @@ def run_one_experiment(
                                 "dominant_frame": "",
                                 "comparison_relation": "",
                                 "neutralizer_present": "",
+                                "label_before_override": "",
+                                "override_reason": "",
                                 "nli_selected_frames": "",
                                 "nli_raw": "",
                                 "nli_error": "",
@@ -1254,6 +1320,8 @@ def run_one_experiment(
                 "nli_model": args.nli_model or args.model,
                 "nli_entail_threshold": args.nli_entail_threshold,
                 "nli_fallback_global": args.nli_fallback_global,
+                "enforce_relation_consistency": args.enforce_relation_consistency,
+                "nli_absent_force_neutral": args.nli_absent_force_neutral,
                 "nli_max_candidate_frames": args.nli_max_candidate_frames,
                 "nli_include_broad_hypotheses": args.nli_include_broad_hypotheses,
                 "concurrency": args.concurrency,
@@ -1316,6 +1384,8 @@ def main() -> None:
     parser.add_argument("--nli_max_candidate_chars", type=int, default=6000, help="Character budget for candidate frame list in the NLI prompt.")
     parser.add_argument("--nli_include_broad_hypotheses", action=argparse.BooleanOptionalAction, default=True, help="Also send broad UP/DOWN/NEUTRAL frame hypotheses to NLI, so posts without exact cue hits can still retrieve frames.")
     parser.add_argument("--nli_fallback_global", action="store_true", help="If NLI selects no frames, fall back to the global frame prompt instead of an empty frame prompt.")
+    parser.add_argument("--enforce_relation_consistency", action=argparse.BooleanOptionalAction, default=True, help="Force NEUTRAL when the final JSON says comparison_relation=absent but label is UPWARD/DOWNWARD.")
+    parser.add_argument("--nli_absent_force_neutral", action=argparse.BooleanOptionalAction, default=True, help="With NLI retrieval, force NEUTRAL when NLI says comparison_relation=absent and selects no entailed UP/DOWN frame.")
 
     parser.add_argument("--temperature", type=float, default=0.1)
     parser.add_argument("--max_tokens", type=int, default=2048)
