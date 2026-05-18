@@ -873,7 +873,7 @@ def main() -> None:
     parser.add_argument("--include_context_rules", action="store_true", help="Include one context rule per frame in the prompt.")
 
     parser.add_argument("--temperature", type=float, default=0.1)
-    parser.add_argument("--max_tokens", type=int, default=512)
+    parser.add_argument("--max_tokens", type=int, default=2048)
     parser.add_argument("--timeout", type=int, default=180)
     parser.add_argument("--retries", type=int, default=3)
     parser.add_argument("--sleep_base", type=float, default=1.0)
