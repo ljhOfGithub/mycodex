@@ -24,7 +24,8 @@ python run_xhs_frame_lexicon_global_llm.py \
 ## VAL run
 
 ```bash
-export NEWAPI_API_KEY="your_key"
+# First copy config/api_keys.example.env to config/api_keys.local.env,
+# then put your real key in NEWAPI_API_KEY.
 
 python run_xhs_frame_lexicon_global_llm.py \
   --input "/Users/jackie/Downloads/Yu EMNLP/XHS_SC_BERT/data/val.xlsx" \
@@ -43,7 +44,7 @@ python run_xhs_frame_lexicon_global_llm.py \
 ## TEST run
 
 ```bash
-export NEWAPI_API_KEY="your_key"
+# Uses config/api_keys.local.env by default.
 
 python run_xhs_frame_lexicon_global_llm.py \
   --input "/Users/jackie/Downloads/Yu EMNLP/XHS_SC_BERT/data/test.xlsx" \
