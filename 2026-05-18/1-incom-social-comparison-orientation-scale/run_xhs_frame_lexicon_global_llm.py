@@ -139,6 +139,7 @@ B) 更可能为 UPWARD（向上比较：读者感觉对方相对更好）
 - 适度感叹号与列举：用“！”增强兴奋感；用顿号/冒号/清单罗列美好事物或成就。
 - 语气展示满足与拥有感：强调“我拥有/我体验到/我达成”的高位体验。
 - 重要：UPWARD 不要求文本显式出现“比我/别人”。只要帖子把帖主呈现为令人向往的高光经历、稀缺机会、理想生活、外貌/身体优势、消费或移动性资源，就可以是 implicit upward comparison。
+- 对小红书语境要敏感：solo trip、留学/海外 vlog、演唱会、港澳台旅行、圆梦、隐藏款/限量/拆盲盒、女团/爱豆/面试机会、专业能力展示，都可能是轻量但真实的 UPWARD cue。
 
 C) 更可能为 NEUTRAL（中性/无比较邀请）
 - 信息型、说明型、教程型、天气/菜谱/客观建议/广告介绍为主。
@@ -180,6 +181,7 @@ USER_PROMPT_TEMPLATE = """下面补充一组基于社会比较理论、XHS-SCoRE
 4. 若“别人更好”出现在帖主被比较、被贬低、被控制的叙事中，通常不是 UPWARD，而是凸显帖主更差，偏 DOWNWARD。
 5. 若 UP 和 DOWN 线索同时出现，判断文本最终强调的是“已经获得优势/高光结果”还是“仍处于失败、受限、痛苦、缺资源”。
 6. 对疑似 UP 的旅行、美食、演唱会、留学、面试机会、隐藏款/限量、人生照片、变美/穿搭等帖子，不要因为缺少显式比较对象而判 NEUTRAL；先判断它是否呈现帖主的理想/稀缺/高光状态。
+7. 帖子很短时也不要自动判 NEUTRAL。例如“留学澳大利亚vlog”虽短，但“留学+海外”已经呈现明显移动性/教育资源，应优先考虑 UPWARD。
 
 帖子：
 {post_text}
@@ -204,22 +206,29 @@ BROAD_NLI_CANDIDATE_FRAMES: List[Dict[str, str]] = [
         "target_label": "UP",
         "frame": "high_resource_lifestyle",
         "matched_cues": "broad_check",
-        "rationale": "检查帖子是否呈现旅行、演唱会、海外/港澳台移动性、理想生活、精致体验、人生照片、稀缺消费或高光日常，即使没有显式比较词。",
+        "rationale": "检查帖子是否呈现旅行、solo trip、演唱会、海外/港澳台移动性、理想生活、精致体验、人生照片、稀缺消费或高光日常，即使没有显式比较词。",
         "context_rule": "若是帖主自己的拥有/体验/达成/圆梦，且整体令人向往，支持 UP；若只是攻略/第三方介绍，转 NEUTRAL。",
     },
     {
         "target_label": "UP",
         "frame": "achievement_elite_education",
         "matched_cues": "broad_check",
-        "rationale": "检查帖子是否呈现录取、offer、留学、专业能力、面试机会、竞赛/学历/职业进展等成就或稀缺机会。",
+        "rationale": "检查帖子是否呈现录取、offer、留学、海外 vlog、专业能力、面试机会、竞赛/学历/职业进展等成就或稀缺机会。",
         "context_rule": "若强调帖主已获得或正在接近高位机会，支持 UP；若只是教程或求问，谨慎。",
     },
     {
         "target_label": "UP",
         "frame": "appearance_body_success",
         "matched_cues": "broad_check",
-        "rationale": "检查帖子是否呈现外貌、穿搭、身材、上镜、女团/爱豆式机会、被认可等外貌/身体优势。",
+        "rationale": "检查帖子是否呈现外貌、穿搭、身材、上镜、女团/爱豆/丝芭式机会、被认可等外貌/身体优势。",
         "context_rule": "若主要是成功展示或被认可，支持 UP；若主要是焦虑/失败/自卑，转 DOWN。",
+    },
+    {
+        "target_label": "UP",
+        "frame": "scarce_fandom_consumption",
+        "matched_cues": "broad_check",
+        "rationale": "检查帖子是否呈现隐藏款、限量、抢到、拆盲盒、谷子/周边等稀缺消费或粉丝文化高光。",
+        "context_rule": "若强调帖主拆到/拥有稀缺物，支持 UP；若只是商品介绍或求推荐，可能 NEUTRAL。",
     },
     {
         "target_label": "DOWN",
@@ -898,6 +907,7 @@ def classify_row_worker(
     return {
         "row_index": int(row_payload["row_index"]),
         "id": str(row_payload["id"]),
+        "content": str(row_payload["content"]),
         "gt": row_payload.get("class", ""),
         "predicted": code if code in [0, 1, 2] else "",
         "predicted_label": label,
@@ -1128,6 +1138,7 @@ def run_one_experiment(
                 results.append({
                     "row_index": int(idx),
                     "id": post_id,
+                    "content": str(row["content"]),
                     "gt": gt,
                     "predicted": code if code in [0, 1, 2] else "",
                     "predicted_label": label,
@@ -1190,6 +1201,7 @@ def run_one_experiment(
                             result = {
                                 "row_index": int(row_payload["row_index"]),
                                 "id": row_payload.get("id", ""),
+                                "content": row_payload.get("content", ""),
                                 "gt": row_payload.get("class", ""),
                                 "predicted": "",
                                 "predicted_label": "",
