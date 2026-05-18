@@ -88,25 +88,21 @@ FRAME_LABEL_TO_CODE = {
 }
 
 
-SYSTEM_PROMPT = """你是一名 XHS-SCoRE 小红书社会比较方向检测器。
+SYSTEM_PROMPT = """你是一名小红书社会比较方向检测器。
 
-任务定义来自 XHS-SCoRE：给定一条 text-only 小红书帖子，预测它对 18-24 岁活跃小红书用户在第一人称阅读时，会不会立即引发与帖主之间的社会比较，以及比较方向。
-
-这不是作者意图检测，也不是普通情感分析、主题分类、价值判断或全人群语义标签。标签记录的是 reader-grounded elicitation：目标读者读完帖子后，是否会把“我”和“帖主”放进一个相对位置关系里。
+任务：从 18-24 岁活跃小红书用户的第一人称读者视角，判断文本是否会引发读者与帖主之间的社会比较。
 
 标签定义：
-- UPWARD：帖子把帖主放置为相对读者 better off，例如更成功、更幸福、更有资源、更漂亮/自律、更自由、更被认可，因此邀请向上比较。
-- DOWNWARD：帖子把帖主放置为相对读者 worse off，例如更痛苦、更受限、更失败、更缺资源、更低能动性、更被控制或被贬低，因此邀请向下比较。
-- NEUTRAL：帖子没有清晰邀请读者与帖主比较。NEUTRAL 是实质性的“无明显比较”，不是不确定，也不是信息不足。
+- UPWARD：帖主被文本放置为比读者更好、更成功、更幸福、更有资源、更被认可，因此可能引发向上比较。
+- DOWNWARD：帖主被文本放置为比读者更糟、更受限、更痛苦、更缺资源、更低能动性，因此可能引发向下比较。
+- NEUTRAL：文本没有清晰的读者-帖主相对位置。NEUTRAL 是实质性的“无明显比较”，不是不确定。
 
-XHS-SCoRE 的关键原则：
-1. 社会比较方向是关系性判断，不可还原为情绪极性。正面文本可能是 NEUTRAL，负面文本也可能是 NEUTRAL；没有明显评价词的文本也可能触发 UPWARD/DOWNWARD。
-2. 小红书比较线索常常是 implied、relational、culturally grounded，而不是显式说“我比你”。要检查成就、身体/外貌、消费、旅行、家庭、关系、工作、金钱、教育等是否把帖主变成 implicit benchmark。
-3. 注意 pragmatic roles、agency framing、evaluative listing、reported dialogue、平台原生的 aspiration/hardship register。例如“上岸/offer/定居/被夸/住在喜欢的地方”可能构成优势位置；“没办法/只能/被迫/父母控制/没上岸/找不到工作”可能构成受限位置。
-4. 防止 neutralization：不要因为帖子没有显式比较词、没有“羡慕/不如”、或像日常分享，就自动判 NEUTRAL。只要它清楚把帖主呈现为更好或更糟，并可能让目标读者比较，就应判 UPWARD 或 DOWNWARD。
-5. 防止 directional skew：不要把所有积极高光都判 UPWARD，也不要把所有负面情绪都判 DOWNWARD。最终依据是帖主相对读者的位置，而不是单个 cue。
-6. 教程、测评、产品、新闻、榜单、工具说明、普通求推荐，如果没有帖主自身相对优势或困境，通常是 NEUTRAL。
-7. 只输出 JSON，不要输出解释文字。
+重要原则：
+1. 不要做普通情感分析。正面情绪不等于 UPWARD，负面情绪不等于 DOWNWARD。
+2. 先判断是否存在 reader-poster positioning，再判断帖主相对读者是 advantaged、disadvantaged，还是 not positioned。
+3. 词表线索只是 frame-level evidence，不是关键词规则。遇到语境冲突时，以整体相对位置为准。
+4. 教程、测评、产品、新闻、榜单、求推荐如果没有帖主自身优势/困境，通常是 NEUTRAL。
+5. 只输出 JSON，不要输出解释文字。
 """
 
 
@@ -128,22 +124,17 @@ USER_PROMPT_TEMPLATE = """下面是基于社会比较理论和 XHS 语料构建�
 这些 frame 通常削弱社会比较判断，尤其是教程、产品、第三方信息、普通求推荐：
 {neutral_frames}
 
-请按 XHS-SCoRE 的 reader-grounded 流程判定：
-1. Text-only recoverability：只依据文字判断，不假设图片/视频内容。
-2. Reader-poster positioning：目标读者读完后，是否会把“我”和“帖主”放进相对位置关系？这种关系可以是显式比较，也可以由高光展示、资源展示、困境叙事、家庭/工作/外貌/教育处境隐含产生。
-3. Direction：
-   - 如果帖主被呈现为 advantaged / better off，判 UPWARD。
-   - 如果帖主被呈现为 disadvantaged / worse off，判 DOWNWARD。
-   - 如果没有清晰 reader-poster comparison，判 NEUTRAL。
-4. Neutralizer check：如果文本主要是教程、攻略、测评、产品、工具、第三方新闻/榜单、普通求推荐，且帖主没有被放在更好或更糟的位置，判 NEUTRAL。
-5. Contrastive check：如果 UP 和 DOWN 线索同时出现，判断最终 foreground 的是“已获得优势/高光结果”还是“仍处于失败、受限、痛苦、缺资源”。前者偏 UPWARD，后者偏 DOWNWARD。
-6. Anti-neutralization check：如果文本虽像日常分享，但实际呈现了可排名/可羡慕/可同侪比较的生活、成就、身体、消费、关系或自由移动性，不要轻易判 NEUTRAL。
+判定步骤：
+1. 是否存在读者可能把“我”和“帖主”放进同一比较关系的线索？
+2. 如果存在，帖主整体被呈现为更有优势还是更处于困境？
+3. 如果文本主要是信息、教程、测评、新闻、榜单、工具说明或求推荐，且没有帖主自身相对位置，判 NEUTRAL。
+4. 如果 UP 和 DOWN 线索同时出现，判断文本最终强调的是“已经获得优势/高光结果”还是“仍处于失败、受限、痛苦、缺资源”。
 
 帖子：
 {post_text}
 
 仅输出 JSON：
-{{"label":"UPWARD|DOWNWARD|NEUTRAL","dominant_frame":"frame name or NONE","comparison_relation":"explicit|implicit|absent","poster_position":"advantaged|disadvantaged|not_positioned|mixed","neutralizer_present":"yes|no"}}
+{{"label":"UPWARD|DOWNWARD|NEUTRAL","dominant_frame":"frame name or NONE","comparison_relation":"explicit|implicit|absent","neutralizer_present":"yes|no"}}
 """
 
 
@@ -478,7 +469,6 @@ def classify_row_worker(
         "predicted_label": label,
         "dominant_frame": parsed.get("dominant_frame", "") if isinstance(parsed, dict) else "",
         "comparison_relation": parsed.get("comparison_relation", "") if isinstance(parsed, dict) else "",
-        "poster_position": parsed.get("poster_position", "") if isinstance(parsed, dict) else "",
         "neutralizer_present": parsed.get("neutralizer_present", "") if isinstance(parsed, dict) else "",
         "raw": raw,
         "error": error,
@@ -690,7 +680,6 @@ def run_one_experiment(
                     "predicted_label": label,
                     "dominant_frame": parsed.get("dominant_frame", "") if isinstance(parsed, dict) else "",
                     "comparison_relation": parsed.get("comparison_relation", "") if isinstance(parsed, dict) else "",
-                    "poster_position": parsed.get("poster_position", "") if isinstance(parsed, dict) else "",
                     "neutralizer_present": parsed.get("neutralizer_present", "") if isinstance(parsed, dict) else "",
                     "raw": raw,
                     "error": error,
@@ -748,7 +737,6 @@ def run_one_experiment(
                                 "predicted_label": "",
                                 "dominant_frame": "",
                                 "comparison_relation": "",
-                                "poster_position": "",
                                 "neutralizer_present": "",
                                 "raw": "",
                                 "error": f"future_error:{repr(e)}",
@@ -821,10 +809,10 @@ def main() -> None:
     parser.add_argument("--lexicon", type=Path, default=Path("outputs/lexicon/xhs_social_comparison_lexicon.csv"))
     parser.add_argument("--output", type=Path, required=True, help="Output CSV path")
 
-    parser.add_argument("--api_key", type=str, default="sk-fTzcqimjgyTedtu84fyLE9bC11yZeJhVpWIHBJlPGO0DmImB", help="API key. Prefer env NEWAPI_API_KEY or OPENAI_API_KEY.")
+    parser.add_argument("--api_key", type=str, default="", help="API key. Prefer env NEWAPI_API_KEY or OPENAI_API_KEY.")
     parser.add_argument("--base_url", type=str, default="https://api.bianxie.ai", help="OpenAI-compatible base URL")
     parser.add_argument("--no_auto_v1", action="store_true", help="Do not append /v1 to base_url")
-    parser.add_argument("--model", type=str, default="gpt-4.1-nano")
+    parser.add_argument("--model", type=str, default="gpt-5")
 
     parser.add_argument("--top_k_up", type=int, default=120, help="Max cues per UP frame.")
     parser.add_argument("--top_k_down", type=int, default=120, help="Max cues per DOWN frame.")
