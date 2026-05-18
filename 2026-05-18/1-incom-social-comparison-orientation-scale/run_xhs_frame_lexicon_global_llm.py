@@ -138,11 +138,13 @@ B) 更可能为 UPWARD（向上比较：读者感觉对方相对更好）
 - 积极评价词与最高级/极值表达：好看、可爱、幸福、完美、最...、超级...、堪称...等。
 - 适度感叹号与列举：用“！”增强兴奋感；用顿号/冒号/清单罗列美好事物或成就。
 - 语气展示满足与拥有感：强调“我拥有/我体验到/我达成”的高位体验。
+- 重要：UPWARD 不要求文本显式出现“比我/别人”。只要帖子把帖主呈现为令人向往的高光经历、稀缺机会、理想生活、外貌/身体优势、消费或移动性资源，就可以是 implicit upward comparison。
 
 C) 更可能为 NEUTRAL（中性/无比较邀请）
 - 信息型、说明型、教程型、天气/菜谱/客观建议/广告介绍为主。
 - 低情绪或无个人立场；缺乏自我-他人定位；不暗示谁更好/更差。
 - 即使出现积极/消极词，但不指向“我与他人/我与帖主”的相对地位。
+- 注意：不要因为没有显式比较词就自动判 NEUTRAL。若文本展示了帖主拥有、体验到、达成了某种高位/理想状态，应优先检查 UPWARD。
 
 注意：
 1. 不要做普通情感分析。正面情绪不一定是 UPWARD，负面情绪不一定是 DOWNWARD。
@@ -170,13 +172,14 @@ USER_PROMPT_TEMPLATE = """下面补充一组基于社会比较理论、XHS-SCoRE
 {neutral_frames}
 
 判定步骤：
-1. 先判断帖子是否邀请读者比较：是否存在自我-他人定位、读者-帖主定位、相对地位、资源、能动性、成就或生活质量差异。
+1. 先判断帖子是否邀请读者比较：是否存在自我-他人定位、读者-帖主定位、相对地位、资源、能动性、成就或生活质量差异。注意：高光体验/理想生活展示本身可以构成 implicit comparison invitation，不需要出现“比我”。
 2. 若邀请比较，再判断方向：
    - 对方/帖主整体更好、更高光、更有资源、更满足 -> UPWARD。
    - 帖主整体更糟、更受限、更痛苦、更缺资源、更低能动性 -> DOWNWARD。
 3. 若主要是信息、教程、测评、新闻、榜单、工具说明、广告或求推荐，且没有帖主自身相对位置 -> NEUTRAL。
 4. 若“别人更好”出现在帖主被比较、被贬低、被控制的叙事中，通常不是 UPWARD，而是凸显帖主更差，偏 DOWNWARD。
 5. 若 UP 和 DOWN 线索同时出现，判断文本最终强调的是“已经获得优势/高光结果”还是“仍处于失败、受限、痛苦、缺资源”。
+6. 对疑似 UP 的旅行、美食、演唱会、留学、面试机会、隐藏款/限量、人生照片、变美/穿搭等帖子，不要因为缺少显式比较对象而判 NEUTRAL；先判断它是否呈现帖主的理想/稀缺/高光状态。
 
 帖子：
 {post_text}
@@ -196,10 +199,70 @@ NLI_SYSTEM_PROMPT = """你是一个用于小红书社会比较检测的 NLI-styl
 """
 
 
+BROAD_NLI_CANDIDATE_FRAMES: List[Dict[str, str]] = [
+    {
+        "target_label": "UP",
+        "frame": "high_resource_lifestyle",
+        "matched_cues": "broad_check",
+        "rationale": "检查帖子是否呈现旅行、演唱会、海外/港澳台移动性、理想生活、精致体验、人生照片、稀缺消费或高光日常，即使没有显式比较词。",
+        "context_rule": "若是帖主自己的拥有/体验/达成/圆梦，且整体令人向往，支持 UP；若只是攻略/第三方介绍，转 NEUTRAL。",
+    },
+    {
+        "target_label": "UP",
+        "frame": "achievement_elite_education",
+        "matched_cues": "broad_check",
+        "rationale": "检查帖子是否呈现录取、offer、留学、专业能力、面试机会、竞赛/学历/职业进展等成就或稀缺机会。",
+        "context_rule": "若强调帖主已获得或正在接近高位机会，支持 UP；若只是教程或求问，谨慎。",
+    },
+    {
+        "target_label": "UP",
+        "frame": "appearance_body_success",
+        "matched_cues": "broad_check",
+        "rationale": "检查帖子是否呈现外貌、穿搭、身材、上镜、女团/爱豆式机会、被认可等外貌/身体优势。",
+        "context_rule": "若主要是成功展示或被认可，支持 UP；若主要是焦虑/失败/自卑，转 DOWN。",
+    },
+    {
+        "target_label": "DOWN",
+        "frame": "low_agency_constraint",
+        "matched_cues": "broad_check",
+        "rationale": "检查帖子是否呈现无力反抗、被迫、被控制、选择权被夺走、被动承受或不知道怎么办。",
+        "context_rule": "低能动性和受害者叙事支持 DOWN。",
+    },
+    {
+        "target_label": "DOWN",
+        "frame": "family_oppression_low_support",
+        "matched_cues": "broad_check",
+        "rationale": "检查帖子是否呈现父母/伴侣/他人冲突、被骂、被否定、被干涉、道德绑架或原生家庭压迫。",
+        "context_rule": "冲突和控制若把帖主放在更差处境，支持 DOWN。",
+    },
+    {
+        "target_label": "DOWN",
+        "frame": "blocked_aspiration_failure",
+        "matched_cues": "broad_check",
+        "rationale": "检查帖子是否呈现失败、受挫、没得到机会、考试/面试/工作不顺或目标受阻。",
+        "context_rule": "若最终强调仍在困境中，支持 DOWN；若是成功后的复盘，可能 UP 或 NEUTRAL。",
+    },
+    {
+        "target_label": "NEUTRAL",
+        "frame": "tutorial_information",
+        "matched_cues": "broad_check",
+        "rationale": "检查帖子是否主要是教程、攻略、步骤、天气、菜谱、客观建议、信息整理。",
+        "context_rule": "若缺少帖主自身相对位置，支持 NEUTRAL。",
+    },
+    {
+        "target_label": "NEUTRAL",
+        "frame": "product_tool_review",
+        "matched_cues": "broad_check",
+        "rationale": "检查帖子是否主要是产品、工具、广告、测评、开箱、客观介绍或第三方榜单。",
+        "context_rule": "若只是第三方/产品信息，支持 NEUTRAL；若转为帖主稀缺拥有或高光体验，可能 UP。",
+    },
+]
+
+
 NLI_USER_PROMPT_TEMPLATE = """帖子：
 {post_text}
 
-候选 frames 来自词表 cue 命中。每个 frame 包含目标方向、命中的 cues、理论说明和语境规则。
+候选 frames 来自词表 cue 命中和/或 broad frame hypothesis。每个 frame 包含目标方向、命中的 cues、理论说明和语境规则。
 
 {candidate_frames}
 
@@ -214,6 +277,8 @@ NLI_USER_PROMPT_TEMPLATE = """帖子：
 1. AMBIGUOUS comparison markers 只说明可能有比较关系，不单独决定 UP/DOWN。
 2. NEUTRAL neutralizer frames 若被 entailed，应保留，因为它们能抑制误判。
 3. “别人更好而我更差”应支持 DOWNWARD 的低能动/受挫 frame，而不是 UPWARD。
+4. UPWARD 可以是 implicit 的：旅行/美食/演唱会/留学/机会/人生照片/隐藏款/变美等高光展示，即使没有“比我”，也可能 entailed。
+5. 不要把“缺少显式比较词”当作 comparison_relation=absent 的充分理由。
 
 仅输出 JSON：
 {{
@@ -480,6 +545,7 @@ def build_nli_candidate_frames(
     max_candidate_frames: int,
     max_cues_per_frame: int,
     max_chars: int,
+    include_broad_hypotheses: bool,
 ) -> Tuple[str, List[Tuple[str, str]]]:
     hits: List[Dict[str, Any]] = []
     for _, row in lex.iterrows():
@@ -487,41 +553,56 @@ def build_nli_candidate_frames(
         if cue_matches_text(cue, post_text):
             hits.append(row.to_dict())
 
-    if not hits:
+    grouped: List[Tuple[Tuple[str, str], Optional[pd.DataFrame], int, Optional[Dict[str, str]]]] = []
+
+    if hits:
+        hit_df = pd.DataFrame(hits)
+        hit_df["_sort"] = hit_df.apply(cue_sort_key, axis=1)
+        hit_df = hit_df.sort_values("_sort")
+
+        for key, g in hit_df.groupby(["target_label", "frame"], sort=False):
+            grouped.append((key, g, len(g), None))
+
+    if include_broad_hypotheses:
+        existing_keys = {tuple(item[0]) for item in grouped}
+        for broad in BROAD_NLI_CANDIDATE_FRAMES:
+            key = (broad["target_label"], broad["frame"])
+            if key not in existing_keys:
+                grouped.append((key, None, 0, broad))
+
+    if not grouped:
         return "无候选 frame：帖子没有直接命中当前 lexicon cues。", []
 
-    hit_df = pd.DataFrame(hits)
-    hit_df["_sort"] = hit_df.apply(cue_sort_key, axis=1)
-    hit_df = hit_df.sort_values("_sort")
-
-    grouped: List[Tuple[Tuple[str, str], pd.DataFrame, int]] = []
-    for key, g in hit_df.groupby(["target_label", "frame"], sort=False):
-        grouped.append((key, g, len(g)))
-
-    grouped.sort(key=lambda item: (-item[2], str(item[0][0]), str(item[0][1])))
+    grouped.sort(key=lambda item: (-item[2], 1 if item[3] else 0, str(item[0][0]), str(item[0][1])))
 
     lines: List[str] = []
     selected_keys: List[Tuple[str, str]] = []
     total_chars = 0
 
-    for (target_label, frame), g, hit_count in grouped[:max_candidate_frames]:
-        cues: List[str] = []
-        for cue in g["cue"].tolist():
-            cue = str(cue).strip()
-            if cue and cue not in cues:
-                cues.append(cue)
-            if len(cues) >= max_cues_per_frame:
-                break
+    for (target_label, frame), g, hit_count, broad in grouped[:max_candidate_frames]:
+        if broad is not None:
+            cues = [broad["matched_cues"]]
+            rationale = broad["rationale"]
+            rule = broad["context_rule"]
+        else:
+            cues = []
+            assert g is not None
+            for cue in g["cue"].tolist():
+                cue = str(cue).strip()
+                if cue and cue not in cues:
+                    cues.append(cue)
+                if len(cues) >= max_cues_per_frame:
+                    break
 
-        rationale = ""
-        if "rationale" in g.columns:
-            values = [str(x).strip() for x in g["rationale"].dropna().tolist() if str(x).strip()]
-            rationale = values[0] if values else ""
+            rationale = ""
+            if "rationale" in g.columns:
+                values = [str(x).strip() for x in g["rationale"].dropna().tolist() if str(x).strip()]
+                rationale = values[0] if values else ""
 
-        rule = ""
-        if "context_rule" in g.columns:
-            values = [str(x).strip() for x in g["context_rule"].dropna().tolist() if str(x).strip()]
-            rule = values[0] if values else ""
+            rule = ""
+            if "context_rule" in g.columns:
+                values = [str(x).strip() for x in g["context_rule"].dropna().tolist() if str(x).strip()]
+                rule = values[0] if values else ""
 
         line = (
             f"- target_label={target_label}; frame={frame}; "
@@ -699,6 +780,7 @@ def classify_one(
             max_candidate_frames=nli_args.nli_max_candidate_frames,
             max_cues_per_frame=nli_args.nli_max_cues_per_frame,
             max_chars=nli_args.nli_max_candidate_chars,
+            include_broad_hypotheses=nli_args.nli_include_broad_hypotheses,
         )
 
         if candidate_keys:
@@ -1161,6 +1243,7 @@ def run_one_experiment(
                 "nli_entail_threshold": args.nli_entail_threshold,
                 "nli_fallback_global": args.nli_fallback_global,
                 "nli_max_candidate_frames": args.nli_max_candidate_frames,
+                "nli_include_broad_hypotheses": args.nli_include_broad_hypotheses,
                 "concurrency": args.concurrency,
                 "resume": args.resume,
                 "skip_existing_errors": args.skip_existing_errors,
@@ -1201,7 +1284,7 @@ def main() -> None:
 
     parser.add_argument("--top_k_up", type=int, default=120, help="Max cues per UP frame.")
     parser.add_argument("--top_k_down", type=int, default=120, help="Max cues per DOWN frame.")
-    parser.add_argument("--top_k_neu", type=int, default=70, help="Max cues per NEUTRAL frame.")
+    parser.add_argument("--top_k_neu", type=int, default=0, help="Max cues per NEUTRAL frame.")
     parser.add_argument("--top_k_ambiguous", type=int, default=46, help="Max cues per AMBIGUOUS frame.")
     parser.add_argument("--max_chars_per_label", type=int, default=10000)
     parser.add_argument("--max_chars_ambiguous", type=int, default=4000)
@@ -1219,6 +1302,7 @@ def main() -> None:
     parser.add_argument("--nli_max_candidate_frames", type=int, default=12, help="Max cue-hit frames sent to the NLI retriever per post.")
     parser.add_argument("--nli_max_cues_per_frame", type=int, default=8, help="Max matched cues shown per candidate frame.")
     parser.add_argument("--nli_max_candidate_chars", type=int, default=6000, help="Character budget for candidate frame list in the NLI prompt.")
+    parser.add_argument("--nli_include_broad_hypotheses", action=argparse.BooleanOptionalAction, default=True, help="Also send broad UP/DOWN/NEUTRAL frame hypotheses to NLI, so posts without exact cue hits can still retrieve frames.")
     parser.add_argument("--nli_fallback_global", action="store_true", help="If NLI selects no frames, fall back to the global frame prompt instead of an empty frame prompt.")
 
     parser.add_argument("--temperature", type=float, default=0.1)
