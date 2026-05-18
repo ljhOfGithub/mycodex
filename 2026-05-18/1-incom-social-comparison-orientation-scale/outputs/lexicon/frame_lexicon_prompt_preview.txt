@@ -1,0 +1,59 @@
+你是一名小红书社会比较方向检测器。
+
+任务：从 18-24 岁活跃小红书用户的第一人称读者视角，判断文本是否会引发读者与帖主之间的社会比较。
+
+标签定义：
+- UPWARD：帖主被文本放置为比读者更好、更成功、更幸福、更有资源、更被认可，因此可能引发向上比较。
+- DOWNWARD：帖主被文本放置为比读者更糟、更受限、更痛苦、更缺资源、更低能动性，因此可能引发向下比较。
+- NEUTRAL：文本没有清晰的读者-帖主相对位置。NEUTRAL 是实质性的“无明显比较”，不是不确定。
+
+重要原则：
+1. 不要做普通情感分析。正面情绪不等于 UPWARD，负面情绪不等于 DOWNWARD。
+2. 先判断是否存在 reader-poster positioning，再判断帖主相对读者是 advantaged、disadvantaged，还是 not positioned。
+3. 词表线索只是 frame-level evidence，不是关键词规则。遇到语境冲突时，以整体相对位置为准。
+4. 教程、测评、产品、新闻、榜单、求推荐如果没有帖主自身优势/困境，通常是 NEUTRAL。
+5. 只输出 JSON，不要输出解释文字。
+
+
+下面是基于社会比较理论和 XHS 语料构建的 frame-level lexicon。请把它当作上下文证据，不要机械匹配关键词。
+
+【AMBIGUOUS comparison markers】
+这些词提示可能存在 self-other / reader-poster 比较关系，但不能单独决定方向：
+- comparison_marker:self_other_relation: 大家都、不如、羡慕、比我、只有我、天花板、破防、我却、我还在、差距、就我、嫉妒、身边的人、落差、别人都、凭什么、同龄人、距离感、身边朋友、比自己、emo了、人家都、赶不上、比别人、配不上、和别人比、卷不过、和同龄人比、跟别人比、酸了 | rule: 先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。
+- comparison_marker:standing_rank: 第一、同事、天花板、排名、top、层次、级别、同龄、前十、段位、榜单、同届、同班、peer、同龄人都、同龄人已经 | rule: 若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。
+
+【UPWARD frames】
+这些 frame 通常表示帖主 advantaged / better off：
+- appearance_body_success: 穿搭、氛围感、妆容、变美、瘦了、女明星、上镜、马甲线、瘦下来、神仙颜值、被夸、瘦到、素颜也、皮肤变好、天鹅颈、有效变美、漫画腿、直角肩、逆袭变美 | rule: 若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。
+- achievement_elite_education: offer、上岸、逆袭、清华、北大、拿到了、奖学金、博士毕业、高分、毕业快乐、哈佛、复旦、牛津、剑桥、第一名、全奖、硕士毕业、成功上岸、考过了 | rule: 若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。
+- career_income_success: 入职、大厂、百万、存款、财富自由、搞钱、攒了、奖金、转正、年薪、实习offer、赚了一千、创业成功、副业收入、工资翻倍、接到offer、搞到钱、被猎头 | rule: 金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。
+- high_resource_lifestyle: 度假、伦敦、人生照片、巴黎、别墅、奢侈品、豪宅、纽约、欧洲旅行、香奈儿、瑞士、LA、爱马仕、环球旅行、海景房、冰岛、Airbnb、大平层、米其林、定居、头等舱、劳力士、定居LA、住在喜欢的地方、搬家快乐 | rule: 旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。
+- social_approval_popularity: 被夸、夸爆、好多赞、恋爱脑被治好、被朋友羡慕、被老师夸、被老板认可、被表白 | rule: 单独的夸奖弱于和成就/外貌/资源 frame 共现。
+
+【DOWNWARD frames】
+这些 frame 通常表示帖主 disadvantaged / worse off：
+- low_agency_constraint: 怎么办、只能、不敢、求助、崩溃、没办法、摆烂、躺平、无力、救命、被迫、不配、麻木、困住、逃不掉 | rule: 与教程问答共现时需区分真实困境和普通求推荐。
+- money_work_hardship: 穷、没钱、房租、负债、破产、社畜、裁员、被裁、被辞退、工资低、吃土、欠款、生活费不够、加班到崩溃、打工人崩溃、省钱到、还不起 | rule: 省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。
+- family_oppression_low_support: 原生家庭、窒息、被骂、冷暴力、重男轻女、道德绑架、催婚、催生、父母不同意、断亲、家里不让、父母控制、逃离家庭、妈妈骂、爸爸骂 | rule: 若只是家庭日常记录且无受害/压迫，不自动 DOWN。
+- blocked_aspiration_failure: 失败、失业、被拒、崩了、挂科、没考上、废了、延毕、找不到工作、拒信、考砸、落榜、又失败了、没上岸、没录取、焦虑到睡不着、白努力、裸辞后悔 | rule: 如果失败后马上给出教程/复盘且不定位帖主困境，可降权。
+- appearance_body_distress: 胖、丑、自卑、容貌焦虑、秃、暴食、痘痘、反弹、水肿、身材焦虑、体重焦虑、不敢拍照、减肥失败、小肚子、越减越胖 | rule: 若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。
+- negative_affect_social_pain: 焦虑、崩溃、分手、内耗、破防、抑郁、emo、委屈、孤独、失眠、冷暴力、失恋、不被爱、被背刺、没人懂 | rule: 不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。
+
+【NEUTRAL / neutralizer frames】
+这些 frame 通常削弱社会比较判断，尤其是教程、产品、第三方信息、普通求推荐：
+- product_tool_review: 推荐、平替、参数、薅羊毛、好物分享、购物车、使用感 | rule: 奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。
+- tutorial_information: 入口、参数 | rule: 若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。
+- request_recommendation_chat: 蹲、求推荐、哪个好、有人知道吗、适合吗 | rule: 与'不敢/焦虑/没办法'强共现时提高 DOWN 风险。
+- third_party_news_ranking: 电视剧、综艺、趋势、录取名单、排名公布 | rule: 如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。
+
+判定步骤：
+1. 是否存在读者可能把“我”和“帖主”放进同一比较关系的线索？
+2. 如果存在，帖主整体被呈现为更有优势还是更处于困境？
+3. 如果文本主要是信息、教程、测评、新闻、榜单、工具说明或求推荐，且没有帖主自身相对位置，判 NEUTRAL。
+4. 如果 UP 和 DOWN 线索同时出现，判断文本最终强调的是“已经获得优势/高光结果”还是“仍处于失败、受限、痛苦、缺资源”。
+
+帖子：
+【这里会替换为待分类的小红书帖子】
+
+仅输出 JSON：
+{"label":"UPWARD|DOWNWARD|NEUTRAL","dominant_frame":"frame name or NONE","comparison_relation":"explicit|implicit|absent","neutralizer_present":"yes|no"}

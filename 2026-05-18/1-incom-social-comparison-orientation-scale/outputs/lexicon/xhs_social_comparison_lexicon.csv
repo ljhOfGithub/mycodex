@@ -1,0 +1,351 @@
+﻿target_label,frame,cue,cue_type,source_basis,rationale,weight_1_3,context_rule,count_UP,count_DOWN,count_NEUTRAL,empirical_label,empirical_share
+AMBIGUOUS,comparison_marker:self_other_relation,emo了,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,1,4,2,DOWN,0.571
+AMBIGUOUS,comparison_marker:self_other_relation,不如,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,59,79,39,DOWN,0.446
+AMBIGUOUS,comparison_marker:self_other_relation,人家都,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,4,3,0,UP,0.571
+AMBIGUOUS,comparison_marker:self_other_relation,凭什么,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,4,8,4,DOWN,0.5
+AMBIGUOUS,comparison_marker:self_other_relation,别人都,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,7,9,0,DOWN,0.562
+AMBIGUOUS,comparison_marker:self_other_relation,卷不过,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,1,1,0,DOWN,0.5
+AMBIGUOUS,comparison_marker:self_other_relation,只有我,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,20,43,12,DOWN,0.573
+AMBIGUOUS,comparison_marker:self_other_relation,同龄人,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,4,6,4,DOWN,0.429
+AMBIGUOUS,comparison_marker:self_other_relation,和别人比,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,0,2,0,DOWN,1.0
+AMBIGUOUS,comparison_marker:self_other_relation,和同龄人比,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,0,0,0,,
+AMBIGUOUS,comparison_marker:self_other_relation,大家都,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,70,97,70,DOWN,0.409
+AMBIGUOUS,comparison_marker:self_other_relation,天花板,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,34,15,21,UP,0.486
+AMBIGUOUS,comparison_marker:self_other_relation,嫉妒,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,9,14,6,DOWN,0.483
+AMBIGUOUS,comparison_marker:self_other_relation,就我,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,9,19,1,DOWN,0.655
+AMBIGUOUS,comparison_marker:self_other_relation,差距,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,14,13,11,UP,0.368
+AMBIGUOUS,comparison_marker:self_other_relation,我却,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,19,25,3,DOWN,0.532
+AMBIGUOUS,comparison_marker:self_other_relation,我还在,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,15,22,5,DOWN,0.524
+AMBIGUOUS,comparison_marker:self_other_relation,比别人,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,1,3,2,DOWN,0.5
+AMBIGUOUS,comparison_marker:self_other_relation,比我,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,40,61,13,DOWN,0.535
+AMBIGUOUS,comparison_marker:self_other_relation,比自己,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,5,2,1,UP,0.625
+AMBIGUOUS,comparison_marker:self_other_relation,破防,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,14,38,12,DOWN,0.594
+AMBIGUOUS,comparison_marker:self_other_relation,羡慕,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,56,68,12,DOWN,0.5
+AMBIGUOUS,comparison_marker:self_other_relation,落差,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,4,10,5,DOWN,0.526
+AMBIGUOUS,comparison_marker:self_other_relation,赶不上,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,3,3,1,DOWN,0.429
+AMBIGUOUS,comparison_marker:self_other_relation,距离感,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,4,6,1,DOWN,0.545
+AMBIGUOUS,comparison_marker:self_other_relation,跟别人比,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,0,0,0,,
+AMBIGUOUS,comparison_marker:self_other_relation,身边朋友,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,4,5,1,DOWN,0.5
+AMBIGUOUS,comparison_marker:self_other_relation,身边的人,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,7,12,4,DOWN,0.522
+AMBIGUOUS,comparison_marker:self_other_relation,配不上,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,3,2,0,UP,0.6
+AMBIGUOUS,comparison_marker:self_other_relation,酸了,relational_marker,INCOM+XHS,显式或半显式把 self 与 other 放进同一比较关系，是 xhs-score 里最容易被 LLM 漏掉的关系性线索。,3,先识别比较关系，再结合 poster advantaged/disadvantaged frame 判定方向。,0,0,0,,
+AMBIGUOUS,comparison_marker:standing_rank,peer,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,0,1,0,DOWN,1.0
+AMBIGUOUS,comparison_marker:standing_rank,top,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,19,8,17,UP,0.432
+AMBIGUOUS,comparison_marker:standing_rank,前十,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,2,5,0,DOWN,0.714
+AMBIGUOUS,comparison_marker:standing_rank,同事,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,68,80,50,DOWN,0.404
+AMBIGUOUS,comparison_marker:standing_rank,同届,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,2,0,0,UP,1.0
+AMBIGUOUS,comparison_marker:standing_rank,同班,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,0,2,0,DOWN,1.0
+AMBIGUOUS,comparison_marker:standing_rank,同龄,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,8,12,4,DOWN,0.5
+AMBIGUOUS,comparison_marker:standing_rank,同龄人已经,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,0,0,0,,
+AMBIGUOUS,comparison_marker:standing_rank,同龄人都,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,0,1,0,DOWN,1.0
+AMBIGUOUS,comparison_marker:standing_rank,天花板,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,34,15,21,UP,0.486
+AMBIGUOUS,comparison_marker:standing_rank,层次,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,18,12,13,UP,0.419
+AMBIGUOUS,comparison_marker:standing_rank,排名,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,20,14,13,UP,0.426
+AMBIGUOUS,comparison_marker:standing_rank,榜单,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,3,0,1,UP,0.75
+AMBIGUOUS,comparison_marker:standing_rank,段位,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,4,0,3,UP,0.571
+AMBIGUOUS,comparison_marker:standing_rank,第一,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,388,324,239,UP,0.408
+AMBIGUOUS,comparison_marker:standing_rank,级别,relative_standing,INCOM+USAS,相对位置、排序和同侪参照会把普通事实变成可比较事实。,2,若只是第三方榜单/公告且无 reader-poster positioning，降为 NEUTRAL。,10,12,5,DOWN,0.444
+DOWN,appearance_body_distress,不上镜,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,2,1,0,UP,0.667
+DOWN,appearance_body_distress,不敢拍照,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,0,0,0,,
+DOWN,appearance_body_distress,丑,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,14,53,29,DOWN,0.552
+DOWN,appearance_body_distress,体重焦虑,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,0,1,0,DOWN,1.0
+DOWN,appearance_body_distress,减肥失败,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,0,0,0,,
+DOWN,appearance_body_distress,反弹,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,4,5,0,DOWN,0.556
+DOWN,appearance_body_distress,容貌焦虑,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,5,11,5,DOWN,0.524
+DOWN,appearance_body_distress,小肚子,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,0,0,0,,
+DOWN,appearance_body_distress,暴食,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,6,8,1,DOWN,0.533
+DOWN,appearance_body_distress,水肿,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,1,4,2,DOWN,0.571
+DOWN,appearance_body_distress,法令纹,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,1,1,2,NEUTRAL,0.5
+DOWN,appearance_body_distress,爆痘,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,0,0,3,NEUTRAL,1.0
+DOWN,appearance_body_distress,痘痘,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,1,6,6,DOWN,0.462
+DOWN,appearance_body_distress,皮肤差,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,0,0,1,NEUTRAL,1.0
+DOWN,appearance_body_distress,秃,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,7,11,1,DOWN,0.579
+DOWN,appearance_body_distress,胖,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,41,51,19,DOWN,0.459
+DOWN,appearance_body_distress,脱发,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,1,3,4,NEUTRAL,0.5
+DOWN,appearance_body_distress,脸垮,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,3,0,0,UP,1.0
+DOWN,appearance_body_distress,腿粗,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,1,0,0,UP,1.0
+DOWN,appearance_body_distress,自卑,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,16,34,4,DOWN,0.63
+DOWN,appearance_body_distress,越减越胖,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,0,0,0,,
+DOWN,appearance_body_distress,身材焦虑,domain_frame,DACS/UPACS+LIWC body+XHS,外貌/身体痛苦是小红书中最强的下行或脆弱性 cue 之一。,3,若同时出现变美成果，对比前后可能整体为 UP；需看当前帖主定位是成功还是困境。,3,3,1,DOWN,0.429
+DOWN,blocked_aspiration_failure,又失败了,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,0,2,0,DOWN,1.0
+DOWN,blocked_aspiration_failure,失业,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,14,21,2,DOWN,0.568
+DOWN,blocked_aspiration_failure,失败,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,34,74,15,DOWN,0.602
+DOWN,blocked_aspiration_failure,崩了,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,4,12,2,DOWN,0.667
+DOWN,blocked_aspiration_failure,废了,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,3,9,3,DOWN,0.6
+DOWN,blocked_aspiration_failure,延毕,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,0,10,3,DOWN,0.769
+DOWN,blocked_aspiration_failure,找不到工作,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,1,10,0,DOWN,0.909
+DOWN,blocked_aspiration_failure,拒信,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,3,5,0,DOWN,0.625
+DOWN,blocked_aspiration_failure,挂科,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,0,15,2,DOWN,0.882
+DOWN,blocked_aspiration_failure,没上岸,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,0,0,0,,
+DOWN,blocked_aspiration_failure,没希望,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,2,1,0,UP,0.667
+DOWN,blocked_aspiration_failure,没录取,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,0,0,0,,
+DOWN,blocked_aspiration_failure,没考上,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,2,10,3,DOWN,0.667
+DOWN,blocked_aspiration_failure,焦虑到睡不着,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,0,0,0,,
+DOWN,blocked_aspiration_failure,白努力,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,0,0,0,,
+DOWN,blocked_aspiration_failure,考砸,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,0,3,1,DOWN,0.75
+DOWN,blocked_aspiration_failure,落榜,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,0,3,0,DOWN,1.0
+DOWN,blocked_aspiration_failure,被拒,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,15,18,3,DOWN,0.5
+DOWN,blocked_aspiration_failure,裸辞后悔,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,0,0,0,,
+DOWN,blocked_aspiration_failure,面试失败,domain_frame,USAS achievement/opposite+XHS,目标受阻是 UP 成就 frame 的反向集合，符合 CACLP 的 contrastive lexicon 思路。,3,如果失败后马上给出教程/复盘且不定位帖主困境，可降权。,2,0,0,UP,1.0
+DOWN,family_oppression_low_support,不被理解,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,3,0,0,UP,1.0
+DOWN,family_oppression_low_support,催婚,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,3,7,0,DOWN,0.7
+DOWN,family_oppression_low_support,催生,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,4,4,0,DOWN,0.5
+DOWN,family_oppression_low_support,冷暴力,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,1,14,0,DOWN,0.933
+DOWN,family_oppression_low_support,原生家庭,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,8,124,6,DOWN,0.899
+DOWN,family_oppression_low_support,妈妈骂,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,0,0,0,,
+DOWN,family_oppression_low_support,家暴,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,1,2,3,NEUTRAL,0.5
+DOWN,family_oppression_low_support,家里不让,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,0,1,0,DOWN,1.0
+DOWN,family_oppression_low_support,控制欲,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,0,2,6,NEUTRAL,0.75
+DOWN,family_oppression_low_support,断亲,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,0,5,0,DOWN,1.0
+DOWN,family_oppression_low_support,父母不同意,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,0,7,0,DOWN,1.0
+DOWN,family_oppression_low_support,父母控制,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,0,1,0,DOWN,1.0
+DOWN,family_oppression_low_support,爸爸骂,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,0,0,0,,
+DOWN,family_oppression_low_support,窒息,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,14,43,13,DOWN,0.614
+DOWN,family_oppression_low_support,被骂,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,1,26,1,DOWN,0.929
+DOWN,family_oppression_low_support,逃离家庭,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,0,1,0,DOWN,1.0
+DOWN,family_oppression_low_support,道德绑架,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,0,9,1,DOWN,0.9
+DOWN,family_oppression_low_support,重男轻女,domain_frame,LIWC family+XHS,家庭压迫/低支持把帖主放在受限和低资源位置，容易触发下行比较或同情。,3,若只是家庭日常记录且无受害/压迫，不自动 DOWN。,0,10,0,DOWN,1.0
+DOWN,low_agency_constraint,不得不,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,36,22,18,UP,0.474
+DOWN,low_agency_constraint,不敢,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,72,133,70,DOWN,0.484
+DOWN,low_agency_constraint,不配,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,1,17,6,DOWN,0.708
+DOWN,low_agency_constraint,只能,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,98,188,69,DOWN,0.53
+DOWN,low_agency_constraint,困住,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,1,6,1,DOWN,0.75
+DOWN,low_agency_constraint,崩溃,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,29,122,19,DOWN,0.718
+DOWN,low_agency_constraint,怎么办,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,46,269,73,DOWN,0.693
+DOWN,low_agency_constraint,摆烂,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,15,31,14,DOWN,0.517
+DOWN,low_agency_constraint,撑不住,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,3,2,0,UP,0.6
+DOWN,low_agency_constraint,救命,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,11,17,15,DOWN,0.395
+DOWN,low_agency_constraint,无力,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,11,29,8,DOWN,0.604
+DOWN,low_agency_constraint,求助,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,31,133,45,DOWN,0.636
+DOWN,low_agency_constraint,没办法,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,21,54,11,DOWN,0.628
+DOWN,low_agency_constraint,没有选择,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,5,3,0,UP,0.625
+DOWN,low_agency_constraint,熬不住,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,5,0,0,UP,1.0
+DOWN,low_agency_constraint,被迫,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,6,18,3,DOWN,0.667
+DOWN,low_agency_constraint,走不出来,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,0,3,4,NEUTRAL,0.571
+DOWN,low_agency_constraint,躺平,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,20,23,12,DOWN,0.418
+DOWN,low_agency_constraint,逃不掉,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,0,0,0,,
+DOWN,low_agency_constraint,麻木,relational_state,INCOM self-position+XHS,低能动性不是情绪词本身，而是把 self/poster 放在受限位置的关系线索。,3,与教程问答共现时需区分真实困境和普通求推荐。,8,13,3,DOWN,0.542
+DOWN,money_work_hardship,加班到崩溃,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,0,0,0,,
+DOWN,money_work_hardship,吃土,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,0,1,1,DOWN,0.5
+DOWN,money_work_hardship,工资低,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,0,3,1,DOWN,0.75
+DOWN,money_work_hardship,房租,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,11,30,10,DOWN,0.588
+DOWN,money_work_hardship,打工人崩溃,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,0,0,0,,
+DOWN,money_work_hardship,月光,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,7,6,4,UP,0.412
+DOWN,money_work_hardship,欠款,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,0,1,0,DOWN,1.0
+DOWN,money_work_hardship,没钱,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,6,66,8,DOWN,0.825
+DOWN,money_work_hardship,生活费不够,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,0,1,0,DOWN,1.0
+DOWN,money_work_hardship,省钱到,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,0,0,0,,
+DOWN,money_work_hardship,破产,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,2,10,2,DOWN,0.714
+DOWN,money_work_hardship,社畜,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,3,10,0,DOWN,0.769
+DOWN,money_work_hardship,穷,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,49,71,22,DOWN,0.5
+DOWN,money_work_hardship,被裁,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,2,5,0,DOWN,0.714
+DOWN,money_work_hardship,被辞退,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,0,5,0,DOWN,1.0
+DOWN,money_work_hardship,裁员,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,3,8,1,DOWN,0.667
+DOWN,money_work_hardship,负债,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,5,10,0,DOWN,0.667
+DOWN,money_work_hardship,还不起,domain_frame,LIWC money/work+risk+XHS,经济/工作困境是高资源生活方式的反向集合。,3,省钱攻略和薅羊毛通常是 NEUTRAL，除非强调匮乏和无助。,0,0,0,,
+DOWN,negative_affect_social_pain,emo,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,24,24,12,DOWN,0.4
+DOWN,negative_affect_social_pain,不被爱,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,0,3,2,DOWN,0.6
+DOWN,negative_affect_social_pain,内耗,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,28,70,35,DOWN,0.526
+DOWN,negative_affect_social_pain,冷暴力,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,1,14,0,DOWN,0.933
+DOWN,negative_affect_social_pain,分手,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,14,104,27,DOWN,0.717
+DOWN,negative_affect_social_pain,失恋,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,4,7,4,DOWN,0.467
+DOWN,negative_affect_social_pain,失眠,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,13,26,5,DOWN,0.591
+DOWN,negative_affect_social_pain,委屈,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,11,37,10,DOWN,0.638
+DOWN,negative_affect_social_pain,孤独,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,13,28,14,DOWN,0.509
+DOWN,negative_affect_social_pain,崩溃,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,29,122,19,DOWN,0.718
+DOWN,negative_affect_social_pain,抑郁,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,10,40,10,DOWN,0.667
+DOWN,negative_affect_social_pain,没人懂,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,0,0,0,,
+DOWN,negative_affect_social_pain,焦虑,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,120,175,71,DOWN,0.478
+DOWN,negative_affect_social_pain,破防,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,14,38,12,DOWN,0.594
+DOWN,negative_affect_social_pain,被孤立,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,2,3,5,NEUTRAL,0.5
+DOWN,negative_affect_social_pain,被背刺,affect_supporting,LIWC negative emotion+social+XHS,负面情绪只能辅助方向；当它与低资源/受阻/受害 frame 结合时才支持 DOWN。,2,不要把所有负面情绪直接判 DOWN；读者比较方向取决于帖主相对位置。,1,2,0,DOWN,0.667
+NEUTRAL,product_tool_review,AI工具,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,2,2,1,DOWN,0.4
+NEUTRAL,product_tool_review,app,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,46,26,27,UP,0.465
+NEUTRAL,product_tool_review,下载,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,15,8,10,UP,0.455
+NEUTRAL,product_tool_review,优惠券,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,3,2,0,UP,0.6
+NEUTRAL,product_tool_review,使用感,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,0,0,1,NEUTRAL,1.0
+NEUTRAL,product_tool_review,参数,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,2,2,12,NEUTRAL,0.75
+NEUTRAL,product_tool_review,好物分享,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,1,2,10,NEUTRAL,0.769
+NEUTRAL,product_tool_review,官网,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,26,2,16,UP,0.591
+NEUTRAL,product_tool_review,平替,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,3,4,10,NEUTRAL,0.588
+NEUTRAL,product_tool_review,开箱,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,17,0,1,UP,0.944
+NEUTRAL,product_tool_review,拔草,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,2,2,1,DOWN,0.4
+NEUTRAL,product_tool_review,推荐,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,193,91,270,NEUTRAL,0.487
+NEUTRAL,product_tool_review,插件,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,3,0,0,UP,1.0
+NEUTRAL,product_tool_review,测评,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,21,12,13,UP,0.457
+NEUTRAL,product_tool_review,种草,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,30,7,15,UP,0.577
+NEUTRAL,product_tool_review,薅羊毛,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,4,0,12,NEUTRAL,0.75
+NEUTRAL,product_tool_review,购物车,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,2,1,2,NEUTRAL,0.4
+NEUTRAL,product_tool_review,软件,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,21,30,20,DOWN,0.423
+NEUTRAL,product_tool_review,链接,neutralizer_frame,LIWC reward/work+USAS object,产品/工具评价常有正负情绪但不一定比较 self-other standing。,3,奢侈品拥有展示可能转 UP；普通测评保持 NEUTRAL。,8,14,9,DOWN,0.452
+NEUTRAL,request_recommendation_chat,可以吗,neutralizer_frame,XHS conversational,求助/询问语体常是平台互动，不等于下行；只有真实受限/受苦才 DOWN。,2,与'不敢/焦虑/没办法'强共现时提高 DOWN 风险。,0,9,4,DOWN,0.692
+NEUTRAL,request_recommendation_chat,哪个好,neutralizer_frame,XHS conversational,求助/询问语体常是平台互动，不等于下行；只有真实受限/受苦才 DOWN。,2,与'不敢/焦虑/没办法'强共现时提高 DOWN 风险。,4,1,6,NEUTRAL,0.545
+NEUTRAL,request_recommendation_chat,姐妹们,neutralizer_frame,XHS conversational,求助/询问语体常是平台互动，不等于下行；只有真实受限/受苦才 DOWN。,2,与'不敢/焦虑/没办法'强共现时提高 DOWN 风险。,50,71,42,DOWN,0.436
+NEUTRAL,request_recommendation_chat,怎么选,neutralizer_frame,XHS conversational,求助/询问语体常是平台互动，不等于下行；只有真实受限/受苦才 DOWN。,2,与'不敢/焦虑/没办法'强共现时提高 DOWN 风险。,10,12,5,DOWN,0.444
+NEUTRAL,request_recommendation_chat,想买,neutralizer_frame,XHS conversational,求助/询问语体常是平台互动，不等于下行；只有真实受限/受苦才 DOWN。,2,与'不敢/焦虑/没办法'强共现时提高 DOWN 风险。,10,23,14,DOWN,0.489
+NEUTRAL,request_recommendation_chat,有人知道吗,neutralizer_frame,XHS conversational,求助/询问语体常是平台互动，不等于下行；只有真实受限/受苦才 DOWN。,2,与'不敢/焦虑/没办法'强共现时提高 DOWN 风险。,0,0,1,NEUTRAL,1.0
+NEUTRAL,request_recommendation_chat,有没有,neutralizer_frame,XHS conversational,求助/询问语体常是平台互动，不等于下行；只有真实受限/受苦才 DOWN。,2,与'不敢/焦虑/没办法'强共现时提高 DOWN 风险。,103,211,145,DOWN,0.46
+NEUTRAL,request_recommendation_chat,求推荐,neutralizer_frame,XHS conversational,求助/询问语体常是平台互动，不等于下行；只有真实受限/受苦才 DOWN。,2,与'不敢/焦虑/没办法'强共现时提高 DOWN 风险。,7,8,17,NEUTRAL,0.531
+NEUTRAL,request_recommendation_chat,求问,neutralizer_frame,XHS conversational,求助/询问语体常是平台互动，不等于下行；只有真实受限/受苦才 DOWN。,2,与'不敢/焦虑/没办法'强共现时提高 DOWN 风险。,5,11,5,DOWN,0.524
+NEUTRAL,request_recommendation_chat,码住,neutralizer_frame,XHS conversational,求助/询问语体常是平台互动，不等于下行；只有真实受限/受苦才 DOWN。,2,与'不敢/焦虑/没办法'强共现时提高 DOWN 风险。,9,0,1,UP,0.9
+NEUTRAL,request_recommendation_chat,蹲,neutralizer_frame,XHS conversational,求助/询问语体常是平台互动，不等于下行；只有真实受限/受苦才 DOWN。,2,与'不敢/焦虑/没办法'强共现时提高 DOWN 风险。,27,40,41,NEUTRAL,0.38
+NEUTRAL,request_recommendation_chat,适合吗,neutralizer_frame,XHS conversational,求助/询问语体常是平台互动，不等于下行；只有真实受限/受苦才 DOWN。,2,与'不敢/焦虑/没办法'强共现时提高 DOWN 风险。,0,0,0,,
+NEUTRAL,request_recommendation_chat,问问,neutralizer_frame,XHS conversational,求助/询问语体常是平台互动，不等于下行；只有真实受限/受苦才 DOWN。,2,与'不敢/焦虑/没办法'强共现时提高 DOWN 风险。,19,51,21,DOWN,0.56
+NEUTRAL,third_party_news_ranking,公告,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,2,7,4,DOWN,0.538
+NEUTRAL,third_party_news_ranking,名单,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,7,10,4,DOWN,0.476
+NEUTRAL,third_party_news_ranking,官方,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,23,19,21,UP,0.365
+NEUTRAL,third_party_news_ranking,录取名单,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,0,0,0,,
+NEUTRAL,third_party_news_ranking,报告,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,17,22,17,DOWN,0.393
+NEUTRAL,third_party_news_ranking,排名公布,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,0,0,0,,
+NEUTRAL,third_party_news_ranking,排行榜,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,0,3,3,DOWN,0.5
+NEUTRAL,third_party_news_ranking,政策,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,16,8,8,UP,0.5
+NEUTRAL,third_party_news_ranking,数据,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,36,43,32,DOWN,0.387
+NEUTRAL,third_party_news_ranking,新闻,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,15,22,22,DOWN,0.373
+NEUTRAL,third_party_news_ranking,明星,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,77,18,36,UP,0.588
+NEUTRAL,third_party_news_ranking,电视剧,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,13,17,26,NEUTRAL,0.464
+NEUTRAL,third_party_news_ranking,盘点,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,3,5,1,DOWN,0.556
+NEUTRAL,third_party_news_ranking,综艺,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,8,3,16,NEUTRAL,0.593
+NEUTRAL,third_party_news_ranking,趋势,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,7,8,11,NEUTRAL,0.423
+NEUTRAL,third_party_news_ranking,通知,neutralizer_frame,Wmatrix/USAS news/ranking,第三方信息不必然触发读者和帖主比较，尤其没有第一人称获益/受损时。,2,如果帖子把榜单与'我/我的学校/我的收入'绑定，重新判定。,32,50,25,DOWN,0.467
+NEUTRAL,tutorial_information,下载,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,15,8,10,UP,0.455
+NEUTRAL,tutorial_information,保姆级,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,7,0,5,UP,0.583
+NEUTRAL,tutorial_information,入口,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,16,4,30,NEUTRAL,0.6
+NEUTRAL,tutorial_information,参数,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,2,2,12,NEUTRAL,0.75
+NEUTRAL,tutorial_information,合集,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,28,7,18,UP,0.528
+NEUTRAL,tutorial_information,如何,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,90,135,78,DOWN,0.446
+NEUTRAL,tutorial_information,官网,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,26,2,16,UP,0.591
+NEUTRAL,tutorial_information,干货,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,20,18,18,UP,0.357
+NEUTRAL,tutorial_information,怎么做,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,25,27,19,DOWN,0.38
+NEUTRAL,tutorial_information,指南,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,48,36,23,UP,0.449
+NEUTRAL,tutorial_information,攻略,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,191,97,146,UP,0.44
+NEUTRAL,tutorial_information,教程,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,48,33,38,UP,0.403
+NEUTRAL,tutorial_information,整理,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,67,42,33,UP,0.472
+NEUTRAL,tutorial_information,方法,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,78,47,46,UP,0.456
+NEUTRAL,tutorial_information,模板,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,21,7,6,UP,0.618
+NEUTRAL,tutorial_information,步骤,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,16,7,8,UP,0.516
+NEUTRAL,tutorial_information,测评,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,21,12,13,UP,0.457
+NEUTRAL,tutorial_information,清单,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,24,3,13,UP,0.6
+NEUTRAL,tutorial_information,笔记,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,104,58,62,UP,0.464
+NEUTRAL,tutorial_information,经验贴,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,6,1,0,UP,0.857
+NEUTRAL,tutorial_information,资料,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,33,44,13,DOWN,0.489
+NEUTRAL,tutorial_information,避坑,neutralizer_frame,Wmatrix/USAS information+XHS,信息/教程语体通常缺少 reader-poster standing，能防止 LLM 把领域词误判为比较。,3,若教程开头强展示个人优势，如'我拿到港大 offer 后...'，不要完全中和。,15,6,11,UP,0.469
+UP,achievement_elite_education,211,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,6,24,8,DOWN,0.632
+UP,achievement_elite_education,985,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,8,27,9,DOWN,0.614
+UP,achievement_elite_education,GPA,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,11,14,1,DOWN,0.538
+UP,achievement_elite_education,offer,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,106,57,28,UP,0.555
+UP,achievement_elite_education,上交,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,3,8,2,DOWN,0.615
+UP,achievement_elite_education,上岸,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,45,40,14,UP,0.455
+UP,achievement_elite_education,保研,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,11,15,5,DOWN,0.484
+UP,achievement_elite_education,全奖,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,6,0,2,UP,0.75
+UP,achievement_elite_education,剑桥,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,7,3,0,UP,0.7
+UP,achievement_elite_education,北大,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,32,6,6,UP,0.727
+UP,achievement_elite_education,博士毕业,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,33,2,3,UP,0.868
+UP,achievement_elite_education,哈佛,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,10,5,5,UP,0.5
+UP,achievement_elite_education,复旦,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,10,6,4,UP,0.5
+UP,achievement_elite_education,奖学金,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,22,17,2,UP,0.537
+UP,achievement_elite_education,录取,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,25,31,4,DOWN,0.517
+UP,achievement_elite_education,成功上岸,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,5,0,0,UP,1.0
+UP,achievement_elite_education,拟录取,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,3,5,1,DOWN,0.556
+UP,achievement_elite_education,拿到了,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,18,17,8,UP,0.419
+UP,achievement_elite_education,毕业快乐,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,16,0,4,UP,0.8
+UP,achievement_elite_education,清华,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,36,7,7,UP,0.72
+UP,achievement_elite_education,港大offer,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,1,1,0,DOWN,0.5
+UP,achievement_elite_education,港硕,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,107,116,96,DOWN,0.364
+UP,achievement_elite_education,牛津,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,11,0,1,UP,0.917
+UP,achievement_elite_education,硕士毕业,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,3,2,2,UP,0.429
+UP,achievement_elite_education,第一名,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,7,2,1,UP,0.7
+UP,achievement_elite_education,绩点,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,10,11,2,DOWN,0.478
+UP,achievement_elite_education,考过了,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,0,0,0,,
+UP,achievement_elite_education,逆袭,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,39,23,5,UP,0.582
+UP,achievement_elite_education,高分,domain_frame,XHS+USAS achievement,成就/教育资源把帖主放在更高相对位置，常触发读者向上比较。,3,若文本是教程、经验分享、申请攻略，需看是否仍突出帖主优势；纯步骤说明可降权。,15,10,6,UP,0.484
+UP,appearance_body_success,上镜,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,10,5,9,UP,0.417
+UP,appearance_body_success,发量,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,1,2,2,DOWN,0.4
+UP,appearance_body_success,变好看,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,2,5,1,DOWN,0.625
+UP,appearance_body_success,变漂亮,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,4,7,1,DOWN,0.583
+UP,appearance_body_success,变美,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,35,16,14,UP,0.538
+UP,appearance_body_success,回头率,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,1,2,0,DOWN,0.667
+UP,appearance_body_success,天鹅颈,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,0,0,0,,
+UP,appearance_body_success,女明星,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,24,2,5,UP,0.774
+UP,appearance_body_success,妆容,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,37,22,25,UP,0.44
+UP,appearance_body_success,拍照好看,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,2,1,2,NEUTRAL,0.4
+UP,appearance_body_success,有效变美,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,0,0,0,,
+UP,appearance_body_success,氛围感,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,102,40,43,UP,0.551
+UP,appearance_body_success,漫画腿,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,0,0,0,,
+UP,appearance_body_success,爱豆同款,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,0,0,2,NEUTRAL,1.0
+UP,appearance_body_success,瘦下来,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,8,3,0,UP,0.727
+UP,appearance_body_success,瘦了,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,23,12,4,UP,0.59
+UP,appearance_body_success,瘦到,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,3,0,0,UP,1.0
+UP,appearance_body_success,皮肤变好,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,2,0,0,UP,1.0
+UP,appearance_body_success,直角肩,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,0,0,0,,
+UP,appearance_body_success,神仙颜值,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,6,0,0,UP,1.0
+UP,appearance_body_success,穿搭,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,147,94,84,UP,0.452
+UP,appearance_body_success,素颜也,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,3,0,0,UP,1.0
+UP,appearance_body_success,被夸,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,6,0,0,UP,1.0
+UP,appearance_body_success,身材管理,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,2,0,2,NEUTRAL,0.5
+UP,appearance_body_success,逆袭变美,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,0,0,0,,
+UP,appearance_body_success,韩味,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,0,0,1,NEUTRAL,1.0
+UP,appearance_body_success,马甲线,domain_frame,UPACS+LIWC body+XHS,UPACS 指向更好看的他人/身体；小红书中变美、身材、穿搭成功是典型上行 cue。,3,若出现容貌焦虑/自卑/失败共现，转入 appearance_downward 或 mixed。,11,0,1,UP,0.917
+UP,career_income_success,入职,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,64,23,24,UP,0.577
+UP,career_income_success,创业成功,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,0,0,0,,
+UP,career_income_success,副业收入,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,0,0,0,,
+UP,career_income_success,升职,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,5,8,6,DOWN,0.421
+UP,career_income_success,大厂,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,41,20,10,UP,0.577
+UP,career_income_success,奖金,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,9,1,2,UP,0.75
+UP,career_income_success,存款,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,21,17,4,UP,0.5
+UP,career_income_success,实习offer,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,2,0,0,UP,1.0
+UP,career_income_success,工资翻倍,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,0,0,0,,
+UP,career_income_success,年薪,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,6,3,1,UP,0.6
+UP,career_income_success,接到offer,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,0,0,0,,
+UP,career_income_success,搞到钱,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,0,0,0,,
+UP,career_income_success,搞钱,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,13,6,2,UP,0.619
+UP,career_income_success,攒了,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,10,5,2,UP,0.588
+UP,career_income_success,收入,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,49,51,13,DOWN,0.451
+UP,career_income_success,月薪,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,13,18,15,DOWN,0.391
+UP,career_income_success,百万,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,26,11,7,UP,0.591
+UP,career_income_success,自由职业,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,2,2,0,DOWN,0.5
+UP,career_income_success,被猎头,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,0,0,0,,
+UP,career_income_success,财富自由,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,19,2,4,UP,0.76
+UP,career_income_success,赚了一千,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,1,0,0,UP,1.0
+UP,career_income_success,转正,domain_frame,LIWC money/work+XHS,金钱、工作和成就类资源直接构成 relative standing。,3,金额/职位若与第一人称收获绑定，偏 UP；若是泛泛理财教程，偏 NEUTRAL。,6,5,1,UP,0.5
+UP,high_resource_lifestyle,Airbnb,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,10,0,1,UP,0.909
+UP,high_resource_lifestyle,LA,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,11,0,8,UP,0.579
+UP,high_resource_lifestyle,买房,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,32,45,16,DOWN,0.484
+UP,high_resource_lifestyle,五星酒店,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,2,2,0,DOWN,0.5
+UP,high_resource_lifestyle,人生照片,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,33,10,10,UP,0.623
+UP,high_resource_lifestyle,伦敦,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,40,18,17,UP,0.533
+UP,high_resource_lifestyle,住在喜欢的地方,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,0,0,0,,
+UP,high_resource_lifestyle,冰岛,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,9,1,3,UP,0.692
+UP,high_resource_lifestyle,别墅,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,27,9,10,UP,0.587
+UP,high_resource_lifestyle,劳力士,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,2,0,1,UP,0.667
+UP,high_resource_lifestyle,商务舱,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,2,1,2,NEUTRAL,0.4
+UP,high_resource_lifestyle,大平层,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,10,0,1,UP,0.909
+UP,high_resource_lifestyle,头等舱,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,6,0,1,UP,0.857
+UP,high_resource_lifestyle,奢侈品,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,20,15,5,UP,0.5
+UP,high_resource_lifestyle,定居,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,4,3,1,UP,0.5
+UP,high_resource_lifestyle,定居LA,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,1,0,0,UP,1.0
+UP,high_resource_lifestyle,巴黎,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,29,8,10,UP,0.617
+UP,high_resource_lifestyle,度假,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,47,15,23,UP,0.553
+UP,high_resource_lifestyle,搬家快乐,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,0,0,0,,
+UP,high_resource_lifestyle,欧洲旅行,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,16,1,7,UP,0.667
+UP,high_resource_lifestyle,海景房,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,10,1,2,UP,0.769
+UP,high_resource_lifestyle,爱马仕,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,9,1,5,UP,0.6
+UP,high_resource_lifestyle,环球旅行,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,12,2,0,UP,0.857
+UP,high_resource_lifestyle,瑞士,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,14,3,4,UP,0.667
+UP,high_resource_lifestyle,看展,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,4,4,6,NEUTRAL,0.429
+UP,high_resource_lifestyle,米其林,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,5,2,2,UP,0.556
+UP,high_resource_lifestyle,纽约,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,17,15,7,UP,0.436
+UP,high_resource_lifestyle,豪宅,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,33,3,3,UP,0.846
+UP,high_resource_lifestyle,香奈儿,domain_frame,USAS money/travel/leisure+XHS,高资源生活方式会把日常展示变成可比较的生活水平信号。,3,旅游攻略/酒店测评不自动 UP；第一人称拥有、享受、长期居住更强。,16,2,4,UP,0.727
+UP,social_approval_popularity,人缘,social_reward,LIWC social/reward+XHS,外部认可会强化帖主优势与读者落差。,2,单独的夸奖弱于和成就/外貌/资源 frame 共现。,0,2,0,DOWN,1.0
+UP,social_approval_popularity,回头率,social_reward,LIWC social/reward+XHS,外部认可会强化帖主优势与读者落差。,2,单独的夸奖弱于和成就/外貌/资源 frame 共现。,1,2,0,DOWN,0.667
+UP,social_approval_popularity,夸爆,social_reward,LIWC social/reward+XHS,外部认可会强化帖主优势与读者落差。,2,单独的夸奖弱于和成就/外貌/资源 frame 共现。,1,0,0,UP,1.0
+UP,social_approval_popularity,好多赞,social_reward,LIWC social/reward+XHS,外部认可会强化帖主优势与读者落差。,2,单独的夸奖弱于和成就/外貌/资源 frame 共现。,0,0,0,,
+UP,social_approval_popularity,恋爱脑被治好,social_reward,LIWC social/reward+XHS,外部认可会强化帖主优势与读者落差。,2,单独的夸奖弱于和成就/外貌/资源 frame 共现。,0,0,0,,
+UP,social_approval_popularity,爆了,social_reward,LIWC social/reward+XHS,外部认可会强化帖主优势与读者落差。,2,单独的夸奖弱于和成就/外貌/资源 frame 共现。,8,9,6,DOWN,0.391
+UP,social_approval_popularity,脱单,social_reward,LIWC social/reward+XHS,外部认可会强化帖主优势与读者落差。,2,单独的夸奖弱于和成就/外貌/资源 frame 共现。,1,5,1,DOWN,0.714
+UP,social_approval_popularity,被夸,social_reward,LIWC social/reward+XHS,外部认可会强化帖主优势与读者落差。,2,单独的夸奖弱于和成就/外貌/资源 frame 共现。,6,0,0,UP,1.0
+UP,social_approval_popularity,被朋友羡慕,social_reward,LIWC social/reward+XHS,外部认可会强化帖主优势与读者落差。,2,单独的夸奖弱于和成就/外貌/资源 frame 共现。,0,0,0,,
+UP,social_approval_popularity,被老师夸,social_reward,LIWC social/reward+XHS,外部认可会强化帖主优势与读者落差。,2,单独的夸奖弱于和成就/外貌/资源 frame 共现。,0,0,0,,
+UP,social_approval_popularity,被老板认可,social_reward,LIWC social/reward+XHS,外部认可会强化帖主优势与读者落差。,2,单独的夸奖弱于和成就/外貌/资源 frame 共现。,0,0,0,,
+UP,social_approval_popularity,被表白,social_reward,LIWC social/reward+XHS,外部认可会强化帖主优势与读者落差。,2,单独的夸奖弱于和成就/外貌/资源 frame 共现。,0,0,0,,
+UP,social_approval_popularity,被要微信,social_reward,LIWC social/reward+XHS,外部认可会强化帖主优势与读者落差。,2,单独的夸奖弱于和成就/外貌/资源 frame 共现。,0,1,0,DOWN,1.0
