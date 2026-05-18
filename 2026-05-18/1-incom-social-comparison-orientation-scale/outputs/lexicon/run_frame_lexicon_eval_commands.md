@@ -62,6 +62,37 @@ python run_xhs_frame_lexicon_global_llm.py \
 
 ## Useful ablations
 
+NLI context-aware retrieval:
+
+```bash
+python run_xhs_frame_lexicon_global_llm.py \
+  --input "/Users/jackie/Downloads/Yu EMNLP/XHS_SC_BERT/data/val.xlsx" \
+  --lexicon outputs/lexicon/xhs_social_comparison_lexicon.csv \
+  --output outputs/frame_lexicon_val/val_framelex_nli.csv \
+  --base_url https://api.bianxie.ai \
+  --model gpt-5 \
+  --use_nli_retrieval \
+  --nli_model gpt-5 \
+  --nli_entail_threshold 0.55 \
+  --nli_max_candidate_frames 12 \
+  --nli_max_cues_per_frame 8 \
+  --include_context_rules
+```
+
+NLI retrieval with global fallback:
+
+```bash
+python run_xhs_frame_lexicon_global_llm.py \
+  --input "/Users/jackie/Downloads/Yu EMNLP/XHS_SC_BERT/data/val.xlsx" \
+  --lexicon outputs/lexicon/xhs_social_comparison_lexicon.csv \
+  --output outputs/frame_lexicon_val/val_framelex_nli_fallback.csv \
+  --base_url https://api.bianxie.ai \
+  --model gpt-5 \
+  --use_nli_retrieval \
+  --nli_fallback_global \
+  --include_context_rules
+```
+
 No neutralizer cues:
 
 ```bash

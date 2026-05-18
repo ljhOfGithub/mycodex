@@ -58,9 +58,12 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
-from openai import OpenAI
-from sklearn.metrics import accuracy_score, confusion_matrix, f1_score, recall_score
-from tqdm import tqdm
+
+try:
+    from tqdm import tqdm
+except ImportError:
+    def tqdm(iterable: Iterable[Any], *args: Any, **kwargs: Any) -> Iterable[Any]:
+        return iterable
 
 
 DEFAULT_ENV_FILE = Path("config/api_keys.local.env")
@@ -180,6 +183,51 @@ USER_PROMPT_TEMPLATE = """下面补充一组基于社会比较理论、XHS-SCoRE
 
 仅输出 JSON：
 {{"label":"UPWARD|DOWNWARD|NEUTRAL","dominant_frame":"frame name or NONE","comparison_relation":"explicit|implicit|absent","neutralizer_present":"yes|no"}}
+"""
+
+
+NLI_SYSTEM_PROMPT = """你是一个用于小红书社会比较检测的 NLI-style frame retriever。
+
+任务：仅根据帖子文本，判断候选 frame 是否被当前上下文支持（entailed）、冲突（contradicted）或没有足够证据（neutral）。
+
+你不是最终分类器。你的目标是为后续分类动态选择 context-relevant lexicon frames。
+
+输出必须是 JSON，不要输出解释文字以外的内容。
+"""
+
+
+NLI_USER_PROMPT_TEMPLATE = """帖子：
+{post_text}
+
+候选 frames 来自词表 cue 命中。每个 frame 包含目标方向、命中的 cues、理论说明和语境规则。
+
+{candidate_frames}
+
+请判断每个候选 frame 是否被帖子上下文支持。
+
+判断标准：
+- entailed：帖子确实激活该 frame。例如 offer 真的指向帖主成就，而不是 offer 模板教程。
+- contradicted：帖子上下文与该 frame 方向或功能冲突。例如“别人都成功我却失败”命中成功词，但整体是帖主更差。
+- neutral：仅出现领域词或碎片，无法确认该 frame 被激活。
+
+特别注意：
+1. AMBIGUOUS comparison markers 只说明可能有比较关系，不单独决定 UP/DOWN。
+2. NEUTRAL neutralizer frames 若被 entailed，应保留，因为它们能抑制误判。
+3. “别人更好而我更差”应支持 DOWNWARD 的低能动/受挫 frame，而不是 UPWARD。
+
+仅输出 JSON：
+{{
+  "comparison_relation": "explicit|implicit|absent",
+  "selected_frames": [
+    {{
+      "target_label": "UP|DOWN|NEUTRAL|AMBIGUOUS",
+      "frame": "frame_name",
+      "nli_label": "entailed|neutral|contradicted",
+      "confidence": 0.0,
+      "reason": "short Chinese reason"
+    }}
+  ]
+}}
 """
 
 
@@ -414,9 +462,204 @@ def build_global_frames(args: argparse.Namespace, lex: pd.DataFrame) -> Dict[str
     }
 
 
-def make_client(api_key: str, base_url: str) -> OpenAI:
+def cue_matches_text(cue: str, text: str) -> bool:
+    cue = str(cue).strip()
+    if not cue:
+        return False
+    if cue.startswith("re:"):
+        try:
+            return re.search(cue[3:], text) is not None
+        except re.error:
+            return False
+    return cue in text
+
+
+def build_nli_candidate_frames(
+    lex: pd.DataFrame,
+    post_text: str,
+    max_candidate_frames: int,
+    max_cues_per_frame: int,
+    max_chars: int,
+) -> Tuple[str, List[Tuple[str, str]]]:
+    hits: List[Dict[str, Any]] = []
+    for _, row in lex.iterrows():
+        cue = str(row.get("cue", "")).strip()
+        if cue_matches_text(cue, post_text):
+            hits.append(row.to_dict())
+
+    if not hits:
+        return "无候选 frame：帖子没有直接命中当前 lexicon cues。", []
+
+    hit_df = pd.DataFrame(hits)
+    hit_df["_sort"] = hit_df.apply(cue_sort_key, axis=1)
+    hit_df = hit_df.sort_values("_sort")
+
+    grouped: List[Tuple[Tuple[str, str], pd.DataFrame, int]] = []
+    for key, g in hit_df.groupby(["target_label", "frame"], sort=False):
+        grouped.append((key, g, len(g)))
+
+    grouped.sort(key=lambda item: (-item[2], str(item[0][0]), str(item[0][1])))
+
+    lines: List[str] = []
+    selected_keys: List[Tuple[str, str]] = []
+    total_chars = 0
+
+    for (target_label, frame), g, hit_count in grouped[:max_candidate_frames]:
+        cues: List[str] = []
+        for cue in g["cue"].tolist():
+            cue = str(cue).strip()
+            if cue and cue not in cues:
+                cues.append(cue)
+            if len(cues) >= max_cues_per_frame:
+                break
+
+        rationale = ""
+        if "rationale" in g.columns:
+            values = [str(x).strip() for x in g["rationale"].dropna().tolist() if str(x).strip()]
+            rationale = values[0] if values else ""
+
+        rule = ""
+        if "context_rule" in g.columns:
+            values = [str(x).strip() for x in g["context_rule"].dropna().tolist() if str(x).strip()]
+            rule = values[0] if values else ""
+
+        line = (
+            f"- target_label={target_label}; frame={frame}; "
+            f"matched_cues={','.join(cues)}; rationale={rationale}; context_rule={rule}"
+        )
+        add_len = len(line) + 1
+        if max_chars > 0 and total_chars + add_len > max_chars:
+            break
+        lines.append(line)
+        selected_keys.append((str(target_label), str(frame)))
+        total_chars += add_len
+
+    return "\n".join(lines) if lines else "无候选 frame。", selected_keys
+
+
+def parse_nli_response(raw: str) -> Tuple[Dict[str, Any], str]:
+    if raw is None or str(raw).strip() == "":
+        return {}, "empty_response"
+
+    raw_clean = strip_code_fences(raw)
+    try:
+        obj = json.loads(raw_clean)
+        if isinstance(obj, dict):
+            return obj, ""
+        return {}, "nli_json_not_object"
+    except Exception as e:
+        return {}, f"nli_json_parse_error:{repr(e)}"
+
+
+def call_nli_retrieval(
+    client: Any,
+    model: str,
+    post_text: str,
+    candidate_frames_text: str,
+    temperature: float,
+    max_tokens: int,
+    timeout: int,
+    retries: int,
+    sleep_base: float,
+    response_format_json: bool,
+) -> Tuple[Dict[str, Any], str, str]:
+    user_prompt = NLI_USER_PROMPT_TEMPLATE.format(
+        post_text=post_text.strip(),
+        candidate_frames=candidate_frames_text,
+    )
+    last_raw = ""
+    last_error = ""
+
+    for attempt in range(retries):
+        try:
+            kwargs: Dict[str, Any] = {
+                "model": model,
+                "temperature": temperature,
+                "messages": [
+                    {"role": "system", "content": NLI_SYSTEM_PROMPT},
+                    {"role": "user", "content": user_prompt},
+                ],
+                "max_tokens": max_tokens,
+                "timeout": timeout,
+            }
+            if response_format_json:
+                kwargs["response_format"] = {"type": "json_object"}
+
+            completion = client.chat.completions.create(**kwargs)
+            raw = completion.choices[0].message.content or ""
+            last_raw = raw
+            parsed, parse_error = parse_nli_response(raw)
+            if parsed:
+                return parsed, raw, parse_error
+
+            last_error = parse_error
+            time.sleep(sleep_base * (attempt + 1))
+
+        except Exception as e:
+            last_error = repr(e)
+            time.sleep(sleep_base * (attempt + 1))
+
+    return {}, last_raw, last_error
+
+
+def select_lexicon_by_nli(
+    lex: pd.DataFrame,
+    nli_obj: Dict[str, Any],
+    threshold: float,
+) -> Tuple[pd.DataFrame, List[str]]:
+    selected = nli_obj.get("selected_frames", []) if isinstance(nli_obj, dict) else []
+    selected_keys: List[Tuple[str, str]] = []
+    selected_names: List[str] = []
+
+    if not isinstance(selected, list):
+        return lex.iloc[0:0].copy(), []
+
+    for item in selected:
+        if not isinstance(item, dict):
+            continue
+        nli_label = str(item.get("nli_label", "")).lower().strip()
+        confidence = _safe_float(item.get("confidence", 0.0), 0.0)
+        if nli_label != "entailed" or confidence < threshold:
+            continue
+        target_label = str(item.get("target_label", "")).upper().strip()
+        frame = str(item.get("frame", "")).strip()
+        if not target_label or not frame:
+            continue
+        selected_keys.append((target_label, frame))
+        selected_names.append(f"{target_label}:{frame}:{confidence:.2f}")
+
+    if not selected_keys:
+        return lex.iloc[0:0].copy(), []
+
+    mask = pd.Series(False, index=lex.index)
+    for target_label, frame in selected_keys:
+        mask = mask | ((lex["target_label"] == target_label) & (lex["frame"] == frame))
+    return lex[mask].copy(), selected_names
+
+
+def build_frames_from_selected_lex(
+    args: argparse.Namespace,
+    selected_lex: pd.DataFrame,
+    fallback_frames: Dict[str, str],
+    fallback_to_global: bool,
+) -> Dict[str, str]:
+    if selected_lex.empty:
+        return fallback_frames if fallback_to_global else {
+            "UP": "无。",
+            "DOWN": "无。",
+            "NEUTRAL": "无。",
+            "AMBIGUOUS": "无。",
+        }
+    return build_global_frames(args, selected_lex)
+
+
+def make_client(api_key: str, base_url: str) -> Any:
     if not api_key:
         raise RuntimeError("Missing API key. Set NEWAPI_API_KEY or OPENAI_API_KEY, or pass --api_key.")
+    try:
+        from openai import OpenAI
+    except ImportError as e:
+        raise RuntimeError("Missing package: openai. Install it in the Python environment used to run this script.") from e
     return OpenAI(api_key=api_key, base_url=base_url)
 
 
@@ -431,10 +674,12 @@ def build_user_prompt(post_text: str, global_frames: Dict[str, str]) -> str:
 
 
 def classify_one(
-    client: OpenAI,
+    client: Any,
     model: str,
     post_text: str,
     global_frames: Dict[str, str],
+    lex: Optional[pd.DataFrame],
+    nli_args: Optional[argparse.Namespace],
     temperature: float,
     max_tokens: int,
     timeout: int,
@@ -442,7 +687,57 @@ def classify_one(
     sleep_base: float,
     response_format_json: bool,
 ) -> Tuple[str, int, str, str, Dict[str, Any]]:
-    user_prompt = build_user_prompt(post_text=post_text, global_frames=global_frames)
+    active_frames = global_frames
+    nli_raw = ""
+    nli_error = ""
+    nli_selected = ""
+
+    if nli_args is not None and getattr(nli_args, "use_nli_retrieval", False) and lex is not None:
+        candidate_frames_text, candidate_keys = build_nli_candidate_frames(
+            lex=lex,
+            post_text=post_text,
+            max_candidate_frames=nli_args.nli_max_candidate_frames,
+            max_cues_per_frame=nli_args.nli_max_cues_per_frame,
+            max_chars=nli_args.nli_max_candidate_chars,
+        )
+
+        if candidate_keys:
+            nli_model = nli_args.nli_model or model
+            nli_obj, nli_raw, nli_error = call_nli_retrieval(
+                client=client,
+                model=nli_model,
+                post_text=post_text,
+                candidate_frames_text=candidate_frames_text,
+                temperature=nli_args.nli_temperature,
+                max_tokens=nli_args.nli_max_tokens,
+                timeout=timeout,
+                retries=retries,
+                sleep_base=sleep_base,
+                response_format_json=response_format_json,
+            )
+            selected_lex, selected_names = select_lexicon_by_nli(
+                lex=lex,
+                nli_obj=nli_obj,
+                threshold=nli_args.nli_entail_threshold,
+            )
+            nli_selected = "|".join(selected_names)
+            active_frames = build_frames_from_selected_lex(
+                args=nli_args,
+                selected_lex=selected_lex,
+                fallback_frames=global_frames,
+                fallback_to_global=nli_args.nli_fallback_global,
+            )
+        else:
+            nli_error = "no_candidate_frames_from_lexicon_hits"
+            if not nli_args.nli_fallback_global:
+                active_frames = {
+                    "UP": "无。",
+                    "DOWN": "无。",
+                    "NEUTRAL": "无。",
+                    "AMBIGUOUS": "无。",
+                }
+
+    user_prompt = build_user_prompt(post_text=post_text, global_frames=active_frames)
     last_raw = ""
     last_error = ""
 
@@ -467,6 +762,10 @@ def classify_one(
 
             label, code, parse_error, parsed = parse_label(raw)
             if label:
+                if isinstance(parsed, dict):
+                    parsed["_nli_selected_frames"] = nli_selected
+                    parsed["_nli_raw"] = nli_raw
+                    parsed["_nli_error"] = nli_error
                 return label, code, raw, parse_error, parsed
 
             last_error = parse_error
@@ -476,7 +775,11 @@ def classify_one(
             last_error = repr(e)
             time.sleep(sleep_base * (attempt + 1))
 
-    return "", -1, last_raw, last_error, {}
+    return "", -1, last_raw, last_error, {
+        "_nli_selected_frames": nli_selected,
+        "_nli_raw": nli_raw,
+        "_nli_error": nli_error,
+    }
 
 
 def classify_row_worker(
@@ -485,6 +788,8 @@ def classify_row_worker(
     base_url: str,
     model: str,
     global_frames: Dict[str, str],
+    lex: pd.DataFrame,
+    nli_args: argparse.Namespace,
     temperature: float,
     max_tokens: int,
     timeout: int,
@@ -498,6 +803,8 @@ def classify_row_worker(
         model=model,
         post_text=str(row_payload["content"]),
         global_frames=global_frames,
+        lex=lex,
+        nli_args=nli_args,
         temperature=temperature,
         max_tokens=max_tokens,
         timeout=timeout,
@@ -515,6 +822,9 @@ def classify_row_worker(
         "dominant_frame": parsed.get("dominant_frame", "") if isinstance(parsed, dict) else "",
         "comparison_relation": parsed.get("comparison_relation", "") if isinstance(parsed, dict) else "",
         "neutralizer_present": parsed.get("neutralizer_present", "") if isinstance(parsed, dict) else "",
+        "nli_selected_frames": parsed.get("_nli_selected_frames", "") if isinstance(parsed, dict) else "",
+        "nli_raw": parsed.get("_nli_raw", "") if isinstance(parsed, dict) else "",
+        "nli_error": parsed.get("_nli_error", "") if isinstance(parsed, dict) else "",
         "raw": raw,
         "error": error,
     }
@@ -527,8 +837,22 @@ def compute_eval_metrics(df: pd.DataFrame) -> Dict[str, Any]:
 
     y_true = valid["gt"].astype(int).to_numpy()
     y_pred = valid["predicted"].astype(int).to_numpy()
-    cm = confusion_matrix(y_true, y_pred, labels=[0, 1, 2])
-    recalls = recall_score(y_true, y_pred, labels=[0, 1, 2], average=None, zero_division=0)
+    cm = np.zeros((3, 3), dtype=int)
+    for true_label, pred_label in zip(y_true, y_pred):
+        if true_label in [0, 1, 2] and pred_label in [0, 1, 2]:
+            cm[int(true_label), int(pred_label)] += 1
+
+    recalls: List[float] = []
+    f1s: List[float] = []
+    for label in [0, 1, 2]:
+        tp = float(cm[label, label])
+        fn = float(cm[label, :].sum() - cm[label, label])
+        fp = float(cm[:, label].sum() - cm[label, label])
+        precision = tp / (tp + fp) if (tp + fp) else 0.0
+        recall = tp / (tp + fn) if (tp + fn) else 0.0
+        f1 = 2 * precision * recall / (precision + recall) if (precision + recall) else 0.0
+        recalls.append(recall)
+        f1s.append(f1)
 
     up_mask = y_true == 0
     neu_mask = y_true == 1
@@ -537,8 +861,8 @@ def compute_eval_metrics(df: pd.DataFrame) -> Dict[str, Any]:
     return {
         "has_metrics": True,
         "n_eval": int(len(valid)),
-        "accuracy": float(accuracy_score(y_true, y_pred)),
-        "macro_f1": float(f1_score(y_true, y_pred, average="macro")),
+        "accuracy": float(np.mean(y_true == y_pred)),
+        "macro_f1": float(np.mean(f1s)),
         "recall_upward": float(recalls[0]),
         "recall_neutral": float(recalls[1]),
         "recall_downward": float(recalls[2]),
@@ -709,6 +1033,8 @@ def run_one_experiment(
                     model=args.model,
                     post_text=str(row["content"]),
                     global_frames=global_frames,
+                    lex=lex,
+                    nli_args=args,
                     temperature=args.temperature,
                     max_tokens=args.max_tokens,
                     timeout=args.timeout,
@@ -726,6 +1052,9 @@ def run_one_experiment(
                     "dominant_frame": parsed.get("dominant_frame", "") if isinstance(parsed, dict) else "",
                     "comparison_relation": parsed.get("comparison_relation", "") if isinstance(parsed, dict) else "",
                     "neutralizer_present": parsed.get("neutralizer_present", "") if isinstance(parsed, dict) else "",
+                    "nli_selected_frames": parsed.get("_nli_selected_frames", "") if isinstance(parsed, dict) else "",
+                    "nli_raw": parsed.get("_nli_raw", "") if isinstance(parsed, dict) else "",
+                    "nli_error": parsed.get("_nli_error", "") if isinstance(parsed, dict) else "",
                     "raw": raw,
                     "error": error,
                 })
@@ -759,6 +1088,8 @@ def run_one_experiment(
                             base_url,
                             args.model,
                             global_frames,
+                            lex,
+                            args,
                             args.temperature,
                             args.max_tokens,
                             args.timeout,
@@ -783,6 +1114,9 @@ def run_one_experiment(
                                 "dominant_frame": "",
                                 "comparison_relation": "",
                                 "neutralizer_present": "",
+                                "nli_selected_frames": "",
+                                "nli_raw": "",
+                                "nli_error": "",
                                 "raw": "",
                                 "error": f"future_error:{repr(e)}",
                             }
@@ -822,6 +1156,11 @@ def run_one_experiment(
                 "min_empirical_share": args.min_empirical_share,
                 "keep_empirical_mismatch": args.keep_empirical_mismatch,
                 "include_context_rules": args.include_context_rules,
+                "use_nli_retrieval": args.use_nli_retrieval,
+                "nli_model": args.nli_model or args.model,
+                "nli_entail_threshold": args.nli_entail_threshold,
+                "nli_fallback_global": args.nli_fallback_global,
+                "nli_max_candidate_frames": args.nli_max_candidate_frames,
                 "concurrency": args.concurrency,
                 "resume": args.resume,
                 "skip_existing_errors": args.skip_existing_errors,
@@ -871,6 +1210,16 @@ def main() -> None:
     parser.add_argument("--min_empirical_share", type=float, default=0.0, help="Optional corpus precision-like filter; 0 keeps theory-only cues.")
     parser.add_argument("--keep_empirical_mismatch", action="store_true", help="Keep cues whose empirical majority label differs from target label.")
     parser.add_argument("--include_context_rules", action="store_true", help="Include one context rule per frame in the prompt.")
+
+    parser.add_argument("--use_nli_retrieval", action="store_true", help="Enable NLI-style context-aware frame retrieval before final classification.")
+    parser.add_argument("--nli_model", type=str, default="", help="Model for NLI retrieval. Defaults to --model.")
+    parser.add_argument("--nli_temperature", type=float, default=0.0)
+    parser.add_argument("--nli_max_tokens", type=int, default=1024)
+    parser.add_argument("--nli_entail_threshold", type=float, default=0.55, help="Minimum confidence for an entailed frame to be kept.")
+    parser.add_argument("--nli_max_candidate_frames", type=int, default=12, help="Max cue-hit frames sent to the NLI retriever per post.")
+    parser.add_argument("--nli_max_cues_per_frame", type=int, default=8, help="Max matched cues shown per candidate frame.")
+    parser.add_argument("--nli_max_candidate_chars", type=int, default=6000, help="Character budget for candidate frame list in the NLI prompt.")
+    parser.add_argument("--nli_fallback_global", action="store_true", help="If NLI selects no frames, fall back to the global frame prompt instead of an empty frame prompt.")
 
     parser.add_argument("--temperature", type=float, default=0.1)
     parser.add_argument("--max_tokens", type=int, default=2048)
