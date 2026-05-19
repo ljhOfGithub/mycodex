@@ -1,0 +1,19 @@
+{
+  "train_path": "/Users/jackie/Downloads/Yu EMNLP/XHS_SC_BERT/data/train.xlsx",
+  "n_train": 8340,
+  "label_counts": {
+    "UP": 2779,
+    "NEUTRAL": 2770,
+    "DOWN": 2791
+  },
+  "feature_rows": 68116,
+  "hard_negative_rows": 4040,
+  "negation_pattern_rows": 6,
+  "seed_expansion_rows": 987,
+  "outputs": {
+    "features": "outputs/lexicon/train_supervised_mining/train_supervised_ngram_features.csv",
+    "hard_negatives": "outputs/lexicon/train_supervised_mining/train_cv_hard_negatives.csv",
+    "negation_patterns": "outputs/lexicon/train_supervised_mining/train_negation_scope_patterns.csv",
+    "seed_expansion": "outputs/lexicon/train_supervised_mining/train_seed_expansion_candidates.csv"
+  }
+}
