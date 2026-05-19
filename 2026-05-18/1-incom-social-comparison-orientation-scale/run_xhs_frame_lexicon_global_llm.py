@@ -146,11 +146,15 @@ C) 更可能为 NEUTRAL（中性/无比较邀请）
 - 低情绪或无个人立场；缺乏自我-他人定位；不暗示谁更好/更差。
 - 即使出现积极/消极词，但不指向“我与他人/我与帖主”的相对地位。
 - 注意：不要因为没有显式比较词就自动判 NEUTRAL。若文本展示了帖主拥有、体验到、达成了某种高位/理想状态，应优先检查 UPWARD。
+- 普通偏好、地点推荐、攻略、宠物、校园日常、产品体验，如果没有帖主自身稀缺拥有、成就、身份优势、外貌/资源优势，默认 NEUTRAL。
 
 注意：
 1. 不要做普通情感分析。正面情绪不一定是 UPWARD，负面情绪不一定是 DOWNWARD。
 2. 如果 cue 与整体语境冲突，以整体语境中的读者-帖主相对位置为准。
-3. 只输出 JSON，不要输出解释文字。
+3. 一致性规则：如果 comparison_relation=absent，默认 label 必须是 NEUTRAL。
+4. 只有当文本明确呈现帖主的高光/稀缺/成就/外貌/资源优势时，才可输出 UPWARD；此时 comparison_relation 必须标为 implicit 或 explicit，不能标为 absent。
+5. DOWNWARD 也必须有 implicit 或 explicit 的相对处境/低能动/受挫/被控制关系；若只是普通负面语气或自嘲，但无比较关系，输出 NEUTRAL。
+6. 只输出 JSON，不要输出解释文字。
 """
 
 
@@ -182,6 +186,10 @@ USER_PROMPT_TEMPLATE = """下面补充一组基于社会比较理论、XHS-SCoRE
 5. 若 UP 和 DOWN 线索同时出现，判断文本最终强调的是“已经获得优势/高光结果”还是“仍处于失败、受限、痛苦、缺资源”。
 6. 对疑似 UP 的旅行、美食、演唱会、留学、面试机会、隐藏款/限量、人生照片、变美/穿搭等帖子，不要因为缺少显式比较对象而判 NEUTRAL；先判断它是否呈现帖主的理想/稀缺/高光状态。
 7. 帖子很短时也不要自动判 NEUTRAL。例如“留学澳大利亚vlog”虽短，但“留学+海外”已经呈现明显移动性/教育资源，应优先考虑 UPWARD。
+8. 如果你输出 comparison_relation="absent"，label 原则上必须是 NEUTRAL。
+9. 若想输出 UPWARD，必须同时满足：文本呈现帖主的高光/稀缺/成就/外貌/资源优势，并把 comparison_relation 标为 implicit 或 explicit。
+10. 若想输出 DOWNWARD，必须同时满足：文本呈现帖主相对更糟、更受限、更失败、更低能动或被控制，并把 comparison_relation 标为 implicit 或 explicit。
+11. 普通偏好、地点推荐、攻略、宠物、校园日常、产品体验，若没有帖主自身稀缺拥有/成就/身份优势，不算 UP，默认 NEUTRAL。
 
 帖子：
 {post_text}
@@ -207,7 +215,7 @@ BROAD_NLI_CANDIDATE_FRAMES: List[Dict[str, str]] = [
         "frame": "high_resource_lifestyle",
         "matched_cues": "broad_check",
         "rationale": "检查帖子是否呈现旅行、solo trip、演唱会、海外/港澳台移动性、理想生活、精致体验、人生照片、稀缺消费或高光日常，即使没有显式比较词。",
-        "context_rule": "若是帖主自己的拥有/体验/达成/圆梦，且整体令人向往，支持 UP；若只是攻略/第三方介绍，转 NEUTRAL。",
+        "context_rule": "若是帖主自己的稀缺拥有/优势身份/高光体验/达成/圆梦，且整体令人向往，支持 UP；普通地点推荐、攻略、校园日常或第三方介绍转 NEUTRAL。",
     },
     {
         "target_label": "UP",
@@ -228,7 +236,7 @@ BROAD_NLI_CANDIDATE_FRAMES: List[Dict[str, str]] = [
         "frame": "scarce_fandom_consumption",
         "matched_cues": "broad_check",
         "rationale": "检查帖子是否呈现隐藏款、限量、抢到、拆盲盒、谷子/周边等稀缺消费或粉丝文化高光。",
-        "context_rule": "若强调帖主拆到/拥有稀缺物，支持 UP；若只是商品介绍或求推荐，可能 NEUTRAL。",
+        "context_rule": "若强调帖主拆到/拥有稀缺物，支持 UP；若只是商品介绍、普通产品体验或求推荐，转 NEUTRAL。",
     },
     {
         "target_label": "DOWN",
@@ -288,6 +296,10 @@ NLI_USER_PROMPT_TEMPLATE = """帖子：
 3. “别人更好而我更差”应支持 DOWNWARD 的低能动/受挫 frame，而不是 UPWARD。
 4. UPWARD 可以是 implicit 的：旅行/美食/演唱会/留学/机会/人生照片/隐藏款/变美等高光展示，即使没有“比我”，也可能 entailed。
 5. 不要把“缺少显式比较词”当作 comparison_relation=absent 的充分理由。
+6. selected_frames 中的 frame 必须逐字复制上方候选 frames 里的 frame，不得创造新 frame。
+7. selected_frames 中的 target_label 必须逐字复制候选 frame 的 target_label，只能是 UP、DOWN、NEUTRAL、AMBIGUOUS。
+8. 普通偏好、地点推荐、攻略、宠物、校园日常、产品体验，若没有帖主自身稀缺拥有/成就/身份优势，不应 entail UP frame。
+9. 如果 comparison_relation="absent"，通常只应 entail NEUTRAL frame；除非文本呈现明确高光/稀缺/成就/外貌/资源优势，此时应把 relation 标为 implicit。
 
 仅输出 JSON：
 {{
@@ -696,13 +708,16 @@ def select_lexicon_by_nli(
     lex: pd.DataFrame,
     nli_obj: Dict[str, Any],
     threshold: float,
-) -> Tuple[pd.DataFrame, List[str]]:
+    allowed_keys: Optional[List[Tuple[str, str]]] = None,
+) -> Tuple[pd.DataFrame, List[str], List[str]]:
     selected = nli_obj.get("selected_frames", []) if isinstance(nli_obj, dict) else []
+    allowed = set(allowed_keys or [])
     selected_keys: List[Tuple[str, str]] = []
     selected_names: List[str] = []
+    dropped_names: List[str] = []
 
     if not isinstance(selected, list):
-        return lex.iloc[0:0].copy(), []
+        return lex.iloc[0:0].copy(), [], []
 
     for item in selected:
         if not isinstance(item, dict):
@@ -715,16 +730,19 @@ def select_lexicon_by_nli(
         frame = str(item.get("frame", "")).strip()
         if not target_label or not frame:
             continue
+        if allowed and (target_label, frame) not in allowed:
+            dropped_names.append(f"{target_label}:{frame}:{confidence:.2f}")
+            continue
         selected_keys.append((target_label, frame))
         selected_names.append(f"{target_label}:{frame}:{confidence:.2f}")
 
     if not selected_keys:
-        return lex.iloc[0:0].copy(), []
+        return lex.iloc[0:0].copy(), [], dropped_names
 
     mask = pd.Series(False, index=lex.index)
     for target_label, frame in selected_keys:
         mask = mask | ((lex["target_label"] == target_label) & (lex["frame"] == frame))
-    return lex[mask].copy(), selected_names
+    return lex[mask].copy(), selected_names, dropped_names
 
 
 def has_selected_directional_nli_frame(nli_selected: str) -> bool:
@@ -751,8 +769,11 @@ def apply_consistency_overrides(
 
     override_reason = ""
     if getattr(nli_args, "enforce_relation_consistency", False):
-        if final_relation == "absent" and code in [0, 2]:
-            override_reason = "final_comparison_relation_absent_forces_neutral"
+        if code in [0, 2] and final_relation not in {"implicit", "explicit"}:
+            if final_relation == "absent":
+                override_reason = "final_comparison_relation_absent_forces_neutral"
+            else:
+                override_reason = "directional_label_requires_implicit_or_explicit_relation"
 
     if (
         not override_reason
@@ -832,6 +853,7 @@ def classify_one(
     nli_raw = ""
     nli_error = ""
     nli_selected = ""
+    nli_dropped = ""
     nli_obj: Dict[str, Any] = {}
 
     if nli_args is not None and getattr(nli_args, "use_nli_retrieval", False) and lex is not None:
@@ -858,12 +880,14 @@ def classify_one(
                 sleep_base=sleep_base,
                 response_format_json=response_format_json,
             )
-            selected_lex, selected_names = select_lexicon_by_nli(
+            selected_lex, selected_names, dropped_names = select_lexicon_by_nli(
                 lex=lex,
                 nli_obj=nli_obj,
                 threshold=nli_args.nli_entail_threshold,
+                allowed_keys=candidate_keys,
             )
             nli_selected = "|".join(selected_names)
+            nli_dropped = "|".join(dropped_names)
             active_frames = build_frames_from_selected_lex(
                 args=nli_args,
                 selected_lex=selected_lex,
@@ -907,6 +931,7 @@ def classify_one(
             if label:
                 if isinstance(parsed, dict):
                     parsed["_nli_selected_frames"] = nli_selected
+                    parsed["_nli_dropped_frames"] = nli_dropped
                     parsed["_nli_raw"] = nli_raw
                     parsed["_nli_error"] = nli_error
                     label, code, parsed = apply_consistency_overrides(
@@ -928,6 +953,7 @@ def classify_one(
 
     return "", -1, last_raw, last_error, {
         "_nli_selected_frames": nli_selected,
+        "_nli_dropped_frames": nli_dropped,
         "_nli_raw": nli_raw,
         "_nli_error": nli_error,
     }
@@ -977,6 +1003,7 @@ def classify_row_worker(
         "label_before_override": parsed.get("_label_before_override", "") if isinstance(parsed, dict) else "",
         "override_reason": parsed.get("_override_reason", "") if isinstance(parsed, dict) else "",
         "nli_selected_frames": parsed.get("_nli_selected_frames", "") if isinstance(parsed, dict) else "",
+        "nli_dropped_frames": parsed.get("_nli_dropped_frames", "") if isinstance(parsed, dict) else "",
         "nli_raw": parsed.get("_nli_raw", "") if isinstance(parsed, dict) else "",
         "nli_error": parsed.get("_nli_error", "") if isinstance(parsed, dict) else "",
         "raw": raw,
@@ -1210,6 +1237,7 @@ def run_one_experiment(
                     "label_before_override": parsed.get("_label_before_override", "") if isinstance(parsed, dict) else "",
                     "override_reason": parsed.get("_override_reason", "") if isinstance(parsed, dict) else "",
                     "nli_selected_frames": parsed.get("_nli_selected_frames", "") if isinstance(parsed, dict) else "",
+                    "nli_dropped_frames": parsed.get("_nli_dropped_frames", "") if isinstance(parsed, dict) else "",
                     "nli_raw": parsed.get("_nli_raw", "") if isinstance(parsed, dict) else "",
                     "nli_error": parsed.get("_nli_error", "") if isinstance(parsed, dict) else "",
                     "raw": raw,
@@ -1275,6 +1303,7 @@ def run_one_experiment(
                                 "label_before_override": "",
                                 "override_reason": "",
                                 "nli_selected_frames": "",
+                                "nli_dropped_frames": "",
                                 "nli_raw": "",
                                 "nli_error": "",
                                 "raw": "",
@@ -1384,7 +1413,7 @@ def main() -> None:
     parser.add_argument("--nli_max_candidate_chars", type=int, default=6000, help="Character budget for candidate frame list in the NLI prompt.")
     parser.add_argument("--nli_include_broad_hypotheses", action=argparse.BooleanOptionalAction, default=True, help="Also send broad UP/DOWN/NEUTRAL frame hypotheses to NLI, so posts without exact cue hits can still retrieve frames.")
     parser.add_argument("--nli_fallback_global", action="store_true", help="If NLI selects no frames, fall back to the global frame prompt instead of an empty frame prompt.")
-    parser.add_argument("--enforce_relation_consistency", action=argparse.BooleanOptionalAction, default=True, help="Force NEUTRAL when the final JSON says comparison_relation=absent but label is UPWARD/DOWNWARD.")
+    parser.add_argument("--enforce_relation_consistency", action=argparse.BooleanOptionalAction, default=True, help="Force NEUTRAL when UPWARD/DOWNWARD lacks comparison_relation=implicit or explicit.")
     parser.add_argument("--nli_absent_force_neutral", action=argparse.BooleanOptionalAction, default=True, help="With NLI retrieval, force NEUTRAL when NLI says comparison_relation=absent and selects no entailed UP/DOWN frame.")
 
     parser.add_argument("--temperature", type=float, default=0.1)
