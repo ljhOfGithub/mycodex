@@ -1,0 +1,20 @@
+﻿marker,docfreq,count_UP,count_NEUTRAL,count_DOWN,empirical_label,empirical_share,suggested_cue_type,suggested_use,example_ids
+大家都,142,38,43,61,DOWN,0.4296,relational_marker,use as comparison marker; direction still depends on context,uc_00005|uc_00016|uc_00058|uc_00239|uc_00350|uc_00687|uc_00837|uc_01330|uc_01540|uc_01581
+不如,103,32,24,47,DOWN,0.4563,relational_marker,use as comparison marker; direction still depends on context,uc_00082|uc_00114|uc_00387|uc_00514|uc_00813|uc_00861|uc_00916|uc_01127|uc_01623|uc_01654
+羡慕,80,34,9,37,DOWN,0.4625,relational_marker,use as comparison marker; direction still depends on context,uc_00015|uc_00501|uc_00728|uc_00871|uc_01360|uc_01393|uc_01882|uc_01955|uc_02231|uc_02232
+比我,72,29,5,38,DOWN,0.5278,relational_marker,use as comparison marker; direction still depends on context,uc_00040|uc_00990|uc_01108|uc_01223|uc_01312|uc_01382|uc_01435|uc_01679|uc_01944|uc_01976
+只有我,44,12,8,24,DOWN,0.5455,relational_marker,use as comparison marker; direction still depends on context,uc_00071|uc_00728|uc_01832|uc_02078|uc_02231|uc_02263|uc_02268|uc_02379|uc_03390|uc_03793
+朋友都,37,15,5,17,DOWN,0.4595,relational_marker,use as comparison marker; direction still depends on context,uc_00327|uc_00821|uc_01362|uc_02227|uc_02387|uc_02832|uc_03080|uc_03135|uc_03399|uc_03457
+破防,36,7,7,22,DOWN,0.6111,relational_marker,use as comparison marker; direction still depends on context,uc_00015|uc_00796|uc_01364|uc_01636|uc_02767|uc_03232|uc_04298|nc_01135|nc_01392|nc_01944
+我却,28,12,2,14,DOWN,0.5,relational_marker,use as comparison marker; direction still depends on context,uc_01124|uc_01827|uc_02037|uc_02374|uc_02578|uc_02832|uc_03358|uc_03575|uc_03682|uc_04030
+差距,22,6,7,9,DOWN,0.4091,relational_marker,use as comparison marker; direction still depends on context,uc_01368|uc_01941|uc_03054|uc_03189|uc_03278|uc_04088|nc_00453|nc_01137|nc_01364|nc_02805
+就我,20,6,0,14,DOWN,0.7,relational_marker,use as comparison marker; direction still depends on context,uc_01098|uc_03030|uc_03467|uc_03541|uc_03575|uc_04351|dc_00203|dc_00406|dc_01132|dc_01161
+身边的人,15,5,2,8,DOWN,0.5333,relational_marker,use as comparison marker; direction still depends on context,uc_01816|uc_01954|uc_01957|uc_02242|uc_04331|nc_03357|nc_04107|dc_01178|dc_02148|dc_02657
+同学都,11,4,1,6,DOWN,0.5455,relational_marker,use as comparison marker; direction still depends on context,uc_03104|uc_03510|uc_03914|uc_04320|nc_01429|dc_00229|dc_00819|dc_01055|dc_01927|dc_02712
+怎么都,11,5,3,3,UP,0.4545,relational_marker,use as comparison marker; direction still depends on context,uc_02685|uc_03131|uc_03541|uc_03941|uc_04351|nc_00025|nc_02720|nc_02871|dc_00511|dc_01362
+凭什么,7,1,2,4,DOWN,0.5714,relational_marker,use as comparison marker; direction still depends on context,uc_00864|nc_00687|nc_02272|dc_00142|dc_00344|dc_00463|dc_01390
+别人都,7,4,0,3,UP,0.5714,relational_marker,use as comparison marker; direction still depends on context,uc_00864|uc_00951|uc_03170|uc_04030|dc_02901|dc_03507|dc_04304
+同龄人,7,2,2,3,DOWN,0.4286,relational_marker,use as comparison marker; direction still depends on context,uc_02037|uc_04083|nc_02353|nc_04242|dc_01829|dc_02141|dc_02872
+人家都,5,2,0,3,DOWN,0.6,relational_marker,use as comparison marker; direction still depends on context,uc_03030|uc_03467|dc_02901|dc_03367|dc_04346
+比别人,4,1,1,2,DOWN,0.5,relational_marker,use as comparison marker; direction still depends on context,uc_02883|nc_03041|dc_01264|dc_01376
+别人家的,2,1,0,1,UP,0.5,relational_marker,use as comparison marker; direction still depends on context,uc_03012|dc_01360
