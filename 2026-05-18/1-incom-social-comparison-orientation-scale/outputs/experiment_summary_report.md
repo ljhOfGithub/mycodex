@@ -77,6 +77,44 @@
 
 ## 3. 主要实验结果
 
+### 3.0 与原论文基线的对比
+
+原论文 Table 2 报告了 XHS-SCoRE test split 上的 zero-shot prompted LLM 与 supervised encoder baselines。核心结果如下：
+
+| 原论文模型 | Type | Acc | Macro F1 | R_UP | R_NEU | R_DOWN | Pred NEU |
+|---|---|---:|---:|---:|---:|---:|---:|
+| GPT-5 | LLM | 0.521 | 0.518 | 0.410 | 0.752 | 0.402 | 0.601 |
+| Qwen3-235B | LLM | 0.491 | 0.480 | 0.670 | 0.522 | 0.282 | 0.425 |
+| GPT-4.1-nano | LLM | 0.469 | 0.469 | 0.379 | 0.630 | 0.397 | 0.558 |
+| Qwen3-30B | LLM | 0.430 | 0.400 | 0.364 | 0.748 | 0.179 | 0.659 |
+| CN-BERT WWM | Encoder | 0.670 | 0.671 | 0.666 | 0.636 | 0.708 | 0.360 |
+| CN-RoBERTa WWM | Encoder | **0.680** | **0.679** | **0.695** | 0.585 | **0.759** | 0.307 |
+| CN-MacBERT Base | Encoder | 0.665 | 0.665 | 0.633 | 0.631 | 0.730 | 0.349 |
+
+与这些结果相比，本实验的最佳 full-test 配置为：
+
+| 本实验配置 | Base model | Acc | Macro F1 | R_UP | R_NEU | R_DOWN | Pred NEU |
+|---|---|---:|---:|---:|---:|---:|---:|
+| train_augmented_stable_nli | GPT-4.1-nano + train-derived frame lexicon + NLI retrieval | **0.523** | **0.525** | 0.431 | 0.606 | 0.532 | 0.473 |
+| train_augmented_stable_nli_neu | GPT-4.1-nano + train-derived lexicon + NEUTRAL frames | 0.515 | 0.519 | **0.489** | 0.522 | **0.534** | 0.407 |
+| theory_error_injected_v2_downscope_v3 | GPT-4.1-nano + theory/downscope prompt | 0.500 | 0.489 | 0.288 | **0.710** | 0.503 | 0.568 |
+
+主要比较结论：
+
+- 相比原论文 **GPT-4.1-nano zero-shot**，本实验最佳配置 Macro F1 从 0.469 提升到 0.525，约 +5.6 points；Accuracy 从 0.469 提升到 0.523，约 +5.4 points。
+- 相比原论文 **GPT-5 zero-shot**，本实验最佳配置 Macro F1 略高：0.525 vs. 0.518；Accuracy 也略高：0.523 vs. 0.521。也就是说，低成本 GPT-4.1-nano 在强 lexicon/NLI scaffold 下，可以接近甚至略超 GPT-5 zero-shot。
+- 但相比 supervised encoder，仍有明显差距：最佳 encoder CN-RoBERTa Macro F1 = 0.679，本实验最佳 Macro F1 = 0.525，仍低约 15.4 points。
+- 本方法最明显改善的是 GPT-4.1-nano 的 neutralization：原论文 GPT-4.1-nano zero-shot Pred NEU = 0.558，本实验最佳 Pred NEU = 0.473；尤其 D→N 从原论文 Table 3 的 50.4% 降到 35.0%。
+
+原论文 Table 3 还报告了 alternative prompting，尤其 cue-explicit prompt。GPT-4.1-nano cue-explicit 的 Macro F1 = 44.9，Pred NEU = 68.2，U→N = 68.6，D→N = 57.8。相比之下，本实验 `train_augmented_stable_nli`：
+
+- Macro F1 = 52.5
+- Pred NEU = 47.3
+- U→N = 46.4
+- D→N = 35.0
+
+这说明单纯把 cue inventory 写进 prompt 不足够；将 cue 组织为 frame-level lexicon，并加入 NLI-style context-aware retrieval，可以更有效减少 neutralization。
+
 ### 3.1 全量 test 结果
 
 | Run | Lexicon / Setting | n | Acc | Macro F1 | R_UP | R_NEU | R_DOWN | 主要现象 |
@@ -272,7 +310,11 @@ val 上 v3、v4、v4b 已经显示：prompt 调整会在 DOWN recall 与 NEUTRAL
 
 ## 8. 简短结论
 
-本轮实验表明，frame-level social comparison lexicon + NLI context-aware retrieval 能比初始 frame lexicon 更好地捕捉 XHS-SCoRE 中的隐含社会比较方向。当前最佳 full test 结果为 macro F1 = 0.525。主要瓶颈已经从 DOWN recall 转移到 UP recall，说明下一步应从 train 的 UP->NEUTRAL 错误中继续补充小红书原生高光/资源/移动性/社交认可 cue，同时控制教程、产品、路线、求推荐等 neutralizer，避免方向性误判。
+本轮实验表明，frame-level social comparison lexicon + NLI context-aware retrieval 能比初始 frame lexicon 更好地捕捉 XHS-SCoRE 中的隐含社会比较方向。当前最佳 full test 结果为 macro F1 = 0.525。
+
+与原论文基线相比，这一结果已经超过 GPT-4.1-nano zero-shot 的 Macro F1 = 0.469，也略高于 GPT-5 zero-shot 的 Macro F1 = 0.518，说明低成本 LLM 在强 lexicon/NLI scaffold 下可以显著缩小与 frontier zero-shot LLM 的差距。但它仍明显低于 supervised encoder，尤其是 CN-RoBERTa WWM 的 Macro F1 = 0.679。因此，本方法更适合作为“prompted LLM detection 的知识增强诊断方案”，而不是替代 supervised in-domain encoder。
+
+主要瓶颈已经从 DOWN recall 转移到 UP recall，说明下一步应从 train 的 UP->NEUTRAL 错误中继续补充小红书原生高光/资源/移动性/社交认可 cue，同时控制教程、产品、路线、求推荐等 neutralizer，避免方向性误判。
 
 ## Appendix: 指标总表
 
