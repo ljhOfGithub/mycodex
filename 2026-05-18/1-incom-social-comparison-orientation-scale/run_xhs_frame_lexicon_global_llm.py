@@ -147,6 +147,7 @@ C) 更可能为 NEUTRAL（中性/无比较邀请）
 - 即使出现积极/消极词，但不指向“我与他人/我与帖主”的相对地位。
 - 注意：不要因为没有显式比较词就自动判 NEUTRAL。若文本展示了帖主拥有、体验到、达成了某种高位/理想状态，应优先检查 UPWARD。
 - 普通偏好、地点推荐、攻略、宠物、校园日常、产品体验，如果没有帖主自身稀缺拥有、成就、身份优势、外貌/资源优势，默认 NEUTRAL。
+- 但“普通日常/个人感受”不能覆盖明确高光移动性或圆梦经历：solo trip、海外/港澳台旅行、演唱会、毕业前圆梦、中奖/幸运、青旅社交、夜生活、爱上一个人旅游等，若是帖主第一人称经历且总体正向，应视为 implicit UPWARD。
 
 注意：
 1. 不要做普通情感分析。正面情绪不一定是 UPWARD，负面情绪不一定是 DOWNWARD。
@@ -190,6 +191,7 @@ USER_PROMPT_TEMPLATE = """下面补充一组基于社会比较理论、XHS-SCoRE
 9. 若想输出 UPWARD，必须同时满足：文本呈现帖主的高光/稀缺/成就/外貌/资源优势，并把 comparison_relation 标为 implicit 或 explicit。
 10. 若想输出 DOWNWARD，必须同时满足：文本呈现帖主相对更糟、更受限、更失败、更低能动或被控制，并把 comparison_relation 标为 implicit 或 explicit。
 11. 普通偏好、地点推荐、攻略、宠物、校园日常、产品体验，若没有帖主自身稀缺拥有/成就/身份优势，不算 UP，默认 NEUTRAL。
+12. 不要把“开心/喜欢/个人体验/日常叙事”自动当作 NEUTRAL neutralizer。若这些词附着在 solo trip、海外/港澳台移动性、演唱会、圆梦、中奖、稀缺消费或成就展示上，应优先激活对应 UP frame。
 
 帖子：
 {post_text}
@@ -300,6 +302,8 @@ NLI_USER_PROMPT_TEMPLATE = """帖子：
 7. selected_frames 中的 target_label 必须逐字复制候选 frame 的 target_label，只能是 UP、DOWN、NEUTRAL、AMBIGUOUS。
 8. 普通偏好、地点推荐、攻略、宠物、校园日常、产品体验，若没有帖主自身稀缺拥有/成就/身份优势，不应 entail UP frame。
 9. 如果 comparison_relation="absent"，通常只应 entail NEUTRAL frame；除非文本呈现明确高光/稀缺/成就/外貌/资源优势，此时应把 relation 标为 implicit。
+10. ordinary_daily / personal_experience / information_sharing 这类 NEUTRAL frame 不能仅因“开心、喜欢、感受、体验、日常叙述”而 entailed。若同一帖子含 solo trip、旅行/留学/港澳台/海外、演唱会、圆梦、中奖、稀缺拥有、外貌/成就高光，应优先 entail 对应 UP frame，并将 ordinary_daily 置为 neutral 或 contradicted。
+11. 对 mobility_peak_experience：第一人称旅行、solo trip、又来某地、毕业前圆梦、看演唱会、青旅社交、夜生活、总体开心/爱上旅行，即使夹杂误机、花钱、天气不好，也应 entail；局部挫折不改变整体高光体验。
 
 仅输出 JSON：
 {{
@@ -380,6 +384,35 @@ def load_split(path: Path) -> pd.DataFrame:
 
     keep_cols = ["id", "content"] + (["class"] if "class" in df.columns else [])
     return df[keep_cols].copy()
+
+
+def apply_label_limits(
+    df: pd.DataFrame,
+    balanced_limit_per_class: int,
+    limit_up: int,
+    limit_neutral: int,
+    limit_down: int,
+) -> pd.DataFrame:
+    requested = {
+        0: balanced_limit_per_class if balanced_limit_per_class > 0 else limit_up,
+        1: balanced_limit_per_class if balanced_limit_per_class > 0 else limit_neutral,
+        2: balanced_limit_per_class if balanced_limit_per_class > 0 else limit_down,
+    }
+    if all(v <= 0 for v in requested.values()):
+        return df
+    if "class" not in df.columns:
+        raise ValueError("Class-balanced limits require the input file to contain column: class")
+
+    parts: List[pd.DataFrame] = []
+    for label_code in [0, 1, 2]:
+        n = requested[label_code]
+        if n <= 0:
+            continue
+        part = df[df["class"] == label_code].head(n).copy()
+        parts.append(part)
+    if not parts:
+        return df.iloc[0:0].copy()
+    return pd.concat(parts, axis=0).sort_index().copy()
 
 
 def _safe_float(x: Any, default: float = 0.0) -> float:
@@ -745,9 +778,69 @@ def select_lexicon_by_nli(
     return lex[mask].copy(), selected_names, dropped_names
 
 
+def matched_directional_lexicon_frames(
+    lex: pd.DataFrame,
+    post_text: str,
+    max_frames: int = 3,
+) -> Tuple[pd.DataFrame, List[str]]:
+    hits: List[Dict[str, Any]] = []
+    for _, row in lex.iterrows():
+        target = str(row.get("target_label", "")).upper().strip()
+        if target not in {"UP", "DOWN"}:
+            continue
+        cue = str(row.get("cue", "")).strip()
+        if cue_matches_text(cue, post_text):
+            hits.append(row.to_dict())
+    if not hits:
+        return lex.iloc[0:0].copy(), []
+
+    hit_df = pd.DataFrame(hits)
+    hit_df["_sort"] = hit_df.apply(cue_sort_key, axis=1)
+    hit_df = hit_df.sort_values("_sort")
+    keep_keys: List[Tuple[str, str]] = []
+    keep_names: List[str] = []
+    for (target, frame), _ in hit_df.groupby(["target_label", "frame"], sort=False):
+        key = (str(target), str(frame))
+        if key in keep_keys:
+            continue
+        keep_keys.append(key)
+        keep_names.append(f"MATCHED:{target}:{frame}")
+        if len(keep_keys) >= max_frames:
+            break
+
+    mask = pd.Series(False, index=lex.index)
+    for target, frame in keep_keys:
+        mask = mask | ((lex["target_label"] == target) & (lex["frame"] == frame))
+    return lex[mask].copy(), keep_names
+
+
 def has_selected_directional_nli_frame(nli_selected: str) -> bool:
     parts = [part.strip().upper() for part in str(nli_selected or "").split("|") if part.strip()]
-    return any(part.startswith("UP:") or part.startswith("DOWN:") for part in parts)
+    return any(
+        part.startswith("UP:")
+        or part.startswith("DOWN:")
+        or part.startswith("MATCHED:UP:")
+        or part.startswith("MATCHED:DOWN:")
+        for part in parts
+    )
+
+
+def has_directional_dominant_frame(parsed: Dict[str, Any]) -> bool:
+    frame = str(parsed.get("dominant_frame", "")).strip()
+    if not frame or frame.lower() == "none":
+        return False
+    neutral_frames = {
+        "tutorial_information",
+        "product_tool_review",
+        "ordinary_daily",
+        "ordinary_information_or_daily_neutralizer",
+        "information_sharing",
+        "information_request",
+        "discourse_marker",
+        "personal_experience",
+        "domain_frame",
+    }
+    return frame not in neutral_frames
 
 
 def apply_consistency_overrides(
@@ -766,11 +859,15 @@ def apply_consistency_overrides(
     final_relation = str(parsed.get("comparison_relation", "")).strip().lower()
     nli_relation = str(nli_obj.get("comparison_relation", "")).strip().lower() if isinstance(nli_obj, dict) else ""
     has_directional_frame = has_selected_directional_nli_frame(nli_selected)
+    has_dominant_directional_frame = has_directional_dominant_frame(parsed)
 
     override_reason = ""
+    relation_fix_reason = ""
     if getattr(nli_args, "enforce_relation_consistency", False):
         if code in [0, 2] and final_relation not in {"implicit", "explicit"}:
-            if final_relation == "absent":
+            if final_relation == "absent" and (has_directional_frame or has_dominant_directional_frame):
+                relation_fix_reason = "directional_label_with_directional_frame_sets_relation_implicit"
+            elif final_relation == "absent":
                 override_reason = "final_comparison_relation_absent_forces_neutral"
             else:
                 override_reason = "directional_label_requires_implicit_or_explicit_relation"
@@ -795,6 +892,10 @@ def apply_consistency_overrides(
         parsed["label"] = "NEUTRAL"
         if not str(parsed.get("dominant_frame", "")).strip():
             parsed["dominant_frame"] = "NONE"
+    elif relation_fix_reason:
+        parsed["_relation_before_override"] = final_relation
+        parsed["_relation_fix_reason"] = relation_fix_reason
+        parsed["comparison_relation"] = "implicit"
 
     return label, code, parsed
 
@@ -886,6 +987,18 @@ def classify_one(
                 threshold=nli_args.nli_entail_threshold,
                 allowed_keys=candidate_keys,
             )
+            if selected_lex.empty or not selected_lex["target_label"].isin(["UP", "DOWN"]).any():
+                matched_dir_lex, matched_dir_names = matched_directional_lexicon_frames(
+                    lex=lex,
+                    post_text=post_text,
+                    max_frames=getattr(nli_args, "nli_max_matched_directional_fallback_frames", 3),
+                )
+                if not matched_dir_lex.empty:
+                    selected_lex = pd.concat([selected_lex, matched_dir_lex], ignore_index=True).drop_duplicates(
+                        subset=["target_label", "frame", "cue"],
+                        keep="first",
+                    )
+                    selected_names.extend(matched_dir_names)
             nli_selected = "|".join(selected_names)
             nli_dropped = "|".join(dropped_names)
             active_frames = build_frames_from_selected_lex(
@@ -1002,6 +1115,8 @@ def classify_row_worker(
         "neutralizer_present": parsed.get("neutralizer_present", "") if isinstance(parsed, dict) else "",
         "label_before_override": parsed.get("_label_before_override", "") if isinstance(parsed, dict) else "",
         "override_reason": parsed.get("_override_reason", "") if isinstance(parsed, dict) else "",
+        "relation_before_override": parsed.get("_relation_before_override", "") if isinstance(parsed, dict) else "",
+        "relation_fix_reason": parsed.get("_relation_fix_reason", "") if isinstance(parsed, dict) else "",
         "nli_selected_frames": parsed.get("_nli_selected_frames", "") if isinstance(parsed, dict) else "",
         "nli_dropped_frames": parsed.get("_nli_dropped_frames", "") if isinstance(parsed, dict) else "",
         "nli_raw": parsed.get("_nli_raw", "") if isinstance(parsed, dict) else "",
@@ -1236,6 +1351,8 @@ def run_one_experiment(
                     "neutralizer_present": parsed.get("neutralizer_present", "") if isinstance(parsed, dict) else "",
                     "label_before_override": parsed.get("_label_before_override", "") if isinstance(parsed, dict) else "",
                     "override_reason": parsed.get("_override_reason", "") if isinstance(parsed, dict) else "",
+                    "relation_before_override": parsed.get("_relation_before_override", "") if isinstance(parsed, dict) else "",
+                    "relation_fix_reason": parsed.get("_relation_fix_reason", "") if isinstance(parsed, dict) else "",
                     "nli_selected_frames": parsed.get("_nli_selected_frames", "") if isinstance(parsed, dict) else "",
                     "nli_dropped_frames": parsed.get("_nli_dropped_frames", "") if isinstance(parsed, dict) else "",
                     "nli_raw": parsed.get("_nli_raw", "") if isinstance(parsed, dict) else "",
@@ -1302,6 +1419,8 @@ def run_one_experiment(
                                 "neutralizer_present": "",
                                 "label_before_override": "",
                                 "override_reason": "",
+                                "relation_before_override": "",
+                                "relation_fix_reason": "",
                                 "nli_selected_frames": "",
                                 "nli_dropped_frames": "",
                                 "nli_raw": "",
@@ -1356,6 +1475,11 @@ def run_one_experiment(
                 "concurrency": args.concurrency,
                 "resume": args.resume,
                 "skip_existing_errors": args.skip_existing_errors,
+                "limit": args.limit,
+                "balanced_limit_per_class": args.balanced_limit_per_class,
+                "limit_up": args.limit_up,
+                "limit_neutral": args.limit_neutral,
+                "limit_down": args.limit_down,
                 "lexicon_rows_after_filter": int(len(lex)),
                 "frame_prompt_char_sizes": {k: len(v) for k, v in global_frames.items()},
             })
@@ -1411,6 +1535,7 @@ def main() -> None:
     parser.add_argument("--nli_max_candidate_frames", type=int, default=12, help="Max cue-hit frames sent to the NLI retriever per post.")
     parser.add_argument("--nli_max_cues_per_frame", type=int, default=8, help="Max matched cues shown per candidate frame.")
     parser.add_argument("--nli_max_candidate_chars", type=int, default=6000, help="Character budget for candidate frame list in the NLI prompt.")
+    parser.add_argument("--nli_max_matched_directional_fallback_frames", type=int, default=3, help="If NLI selects only neutral frames, keep this many exact cue-hit UP/DOWN frames in the final prompt.")
     parser.add_argument("--nli_include_broad_hypotheses", action=argparse.BooleanOptionalAction, default=True, help="Also send broad UP/DOWN/NEUTRAL frame hypotheses to NLI, so posts without exact cue hits can still retrieve frames.")
     parser.add_argument("--nli_fallback_global", action="store_true", help="If NLI selects no frames, fall back to the global frame prompt instead of an empty frame prompt.")
     parser.add_argument("--enforce_relation_consistency", action=argparse.BooleanOptionalAction, default=True, help="Force NEUTRAL when UPWARD/DOWNWARD lacks comparison_relation=implicit or explicit.")
@@ -1423,7 +1548,11 @@ def main() -> None:
     parser.add_argument("--sleep_base", type=float, default=1.0)
     parser.add_argument("--sleep_every", type=int, default=100)
     parser.add_argument("--sleep_seconds", type=float, default=5.0)
-    parser.add_argument("--limit", type=int, default=0)
+    parser.add_argument("--limit", type=int, default=0, help="Take the first N rows after any class-specific sampling. This follows file order.")
+    parser.add_argument("--balanced_limit_per_class", type=int, default=0, help="Take the first N examples from each class: UP, NEUTRAL, DOWN.")
+    parser.add_argument("--limit_up", type=int, default=0, help="Take the first N UP examples, label code 0.")
+    parser.add_argument("--limit_neutral", type=int, default=0, help="Take the first N NEUTRAL examples, label code 1.")
+    parser.add_argument("--limit_down", type=int, default=0, help="Take the first N DOWN examples, label code 2.")
     parser.add_argument("--no_response_format_json", action="store_true", help="Disable response_format={json_object} for providers/models that reject it.")
 
     parser.add_argument("--concurrency", type=int, default=5)
@@ -1459,6 +1588,13 @@ def main() -> None:
         args.model = os.getenv("XHS_LLM_MODEL") or env_values.get("XHS_LLM_MODEL", "") or args.model
 
     df = load_split(args.input)
+    df = apply_label_limits(
+        df=df,
+        balanced_limit_per_class=args.balanced_limit_per_class,
+        limit_up=args.limit_up,
+        limit_neutral=args.limit_neutral,
+        limit_down=args.limit_down,
+    )
     if args.limit and args.limit > 0:
         df = df.head(args.limit).copy()
 
