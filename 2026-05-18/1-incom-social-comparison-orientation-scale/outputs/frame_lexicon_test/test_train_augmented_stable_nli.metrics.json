@@ -1,0 +1,65 @@
+{
+  "has_metrics": true,
+  "n_eval": 2783,
+  "accuracy": 0.5228171038447719,
+  "macro_f1": 0.5249461740697717,
+  "recall_upward": 0.43088552915766737,
+  "recall_neutral": 0.6058315334773218,
+  "recall_downward": 0.5316863587540279,
+  "predicted_upward_rate": 0.2551203736974488,
+  "predicted_neutral_rate": 0.4732303269852677,
+  "predicted_downward_rate": 0.2716492993172835,
+  "up_to_neutral_rate": 0.46436285097192226,
+  "down_to_neutral_rate": 0.3501611170784103,
+  "neutral_to_up_rate": 0.21706263498920086,
+  "neutral_to_down_rate": 0.1771058315334773,
+  "up_to_down_rate": 0.10475161987041037,
+  "down_to_up_rate": 0.11815252416756176,
+  "confusion_matrix_labels_0_1_2": [
+    [
+      399,
+      430,
+      97
+    ],
+    [
+      201,
+      561,
+      164
+    ],
+    [
+      110,
+      326,
+      495
+    ]
+  ],
+  "run_idx": 1,
+  "input": "/Users/jackie/Downloads/Yu EMNLP/XHS_SC_BERT/data/test.xlsx",
+  "lexicon": "outputs/lexicon/xhs_social_comparison_lexicon_train_augmented.csv",
+  "output": "outputs/frame_lexicon_test/test_train_augmented_stable_nli.csv",
+  "model": "gpt-4.1-nano",
+  "base_url": "https://api.bianxie.ai/v1",
+  "top_k_up": 160,
+  "top_k_down": 160,
+  "top_k_neu": 0,
+  "top_k_ambiguous": 60,
+  "min_weight": 1,
+  "min_empirical_share": 0.0,
+  "keep_empirical_mismatch": false,
+  "include_context_rules": true,
+  "use_nli_retrieval": true,
+  "nli_model": "gpt-4.1-nano",
+  "nli_entail_threshold": 0.55,
+  "nli_fallback_global": true,
+  "nli_max_candidate_frames": 12,
+  "nli_include_broad_hypotheses": true,
+  "concurrency": 500,
+  "resume": true,
+  "skip_existing_errors": false,
+  "lexicon_rows_after_filter": 1123,
+  "frame_prompt_char_sizes": {
+    "UP": 8187,
+    "DOWN": 8802,
+    "NEUTRAL": 2,
+    "AMBIGUOUS": 373
+  }
+}

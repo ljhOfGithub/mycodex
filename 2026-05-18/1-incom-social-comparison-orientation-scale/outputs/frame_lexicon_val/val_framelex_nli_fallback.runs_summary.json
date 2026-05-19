@@ -1,0 +1,34 @@
+{
+  "has_summary": true,
+  "num_runs_requested": 1,
+  "num_runs_with_metrics": 1,
+  "runs_summary_csv": "outputs/frame_lexicon_val/val_framelex_nli_fallback.runs_summary.csv",
+  "mean": {
+    "accuracy": 0.49407114624505927,
+    "macro_f1": 0.48810551390174917,
+    "recall_upward": 0.32397408207343414,
+    "recall_neutral": 0.6997840172786177,
+    "recall_downward": 0.45864661654135336,
+    "predicted_upward_rate": 0.1969098095580309,
+    "predicted_neutral_rate": 0.5720445562342795,
+    "predicted_downward_rate": 0.23104563420768953,
+    "up_to_neutral_rate": 0.5907127429805615,
+    "down_to_neutral_rate": 0.4264232008592911,
+    "neutral_to_up_rate": 0.15226781857451405,
+    "neutral_to_down_rate": 0.14794816414686826
+  },
+  "std": {
+    "accuracy": 0.0,
+    "macro_f1": 0.0,
+    "recall_upward": 0.0,
+    "recall_neutral": 0.0,
+    "recall_downward": 0.0,
+    "predicted_upward_rate": 0.0,
+    "predicted_neutral_rate": 0.0,
+    "predicted_downward_rate": 0.0,
+    "up_to_neutral_rate": 0.0,
+    "down_to_neutral_rate": 0.0,
+    "neutral_to_up_rate": 0.0,
+    "neutral_to_down_rate": 0.0
+  }
+}
