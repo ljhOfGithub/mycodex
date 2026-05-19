@@ -70,3 +70,31 @@ Sort `train_frame_cue_candidates.csv` by:
 3. `mean_confidence` descending
 
 Then manually merge stable candidates into `scripts/build_social_comparison_lexicon.py` or directly into a new master lexicon CSV.
+
+## Step 3: merge TRAIN candidates into the master lexicon
+
+Stable merge for validation/testing:
+
+```bash
+python scripts/merge_train_candidates_into_lexicon.py \
+  --base_lexicon outputs/lexicon/xhs_social_comparison_lexicon.csv \
+  --train_candidates outputs/lexicon/train_llm_extractions/train_frame_cue_candidates_stable.csv \
+  --output outputs/lexicon/xhs_social_comparison_lexicon_train_augmented.csv \
+  --review_output outputs/lexicon/xhs_social_comparison_lexicon_train_augmented_review.csv \
+  --min_docfreq 2 \
+  --min_confidence 0.5
+```
+
+Maximum-recall merge for ablation only:
+
+```bash
+python scripts/merge_train_candidates_into_lexicon.py \
+  --base_lexicon outputs/lexicon/xhs_social_comparison_lexicon.csv \
+  --train_candidates outputs/lexicon/train_llm_extractions/train_frame_cue_candidates.csv \
+  --output outputs/lexicon/xhs_social_comparison_lexicon_train_augmented_recall.csv \
+  --review_output outputs/lexicon/xhs_social_comparison_lexicon_train_augmented_recall_review.csv \
+  --include_singletons \
+  --min_confidence 0.0
+```
+
+Use `xhs_social_comparison_lexicon_train_augmented.csv` on VAL first. Only after choosing parameters on VAL should you run TEST.
